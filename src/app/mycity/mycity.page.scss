@@ -1,0 +1,105 @@
+ion-header, ion-toolbar {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.glen_logo {
+    width: 22%;
+    margin-top: 44px;
+}
+// ion-header {
+//   padding-top: env(safe-area-inset-top);
+// }
+ion-header.custom-header {
+ background: white;
+    z-index: 10;
+    /* padding-top: 18px; */
+    // margin-top: 32px;
+}
+
+ion-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.signup-page {
+  --padding-start: 0px;
+  --padding-end: 0px;
+
+  .logo-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
+  }
+
+  .logo {
+    width: 94px;
+    margin-top: -10px;
+  }
+
+  ion-item {
+    --background: #F4F4F4 !important;
+    --border-color: transparent;
+    --border-width: 0;
+    --inner-border-width: 0;
+  }
+
+  .dash-box {
+    background: #963E75;
+    // height: 100%;
+    width: 100%;
+    /* margin: 0px; */
+    padding: 16px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 245px;
+    /* margin-bottom: 0px !important; */
+}
+
+  h1 {
+    text-align: center;
+    color: #fff;
+  }
+
+  p {
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .custom-searchbar {
+    --background: #D8B8D1;
+    --color: #fff;
+    --icon-color: #fff;
+    --placeholder-color: #fff;
+    --cancel-button-color: #fff;
+    --border-radius: 10px;
+  }
+
+  .arrow {
+    background: #fff;
+    width: 37px;
+    padding: 7px;
+    border-radius: 50%;
+    float: right;
+    margin-right: 10px;
+  }
+.full-width-image {
+  width: 100%;
+  height: auto; // maintains aspect ratio
+  display: block; // removes small whitespace below image
+  object-fit: contain; // optional: keeps image inside bounds
+}
+
+
+}
+.city-list {
+  max-height: 200px;  // Or any height suitable for your design
+  overflow-y: auto;
+  background: #D8B8D1; // Optional to match searchbar
+  border-radius: 10px;
+  margin-top: 8px;
+}

@@ -1,0 +1,103 @@
+ion-header, ion-toolbar {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.glen_logo {
+    width: 22%;
+    margin-top: 44px;
+}
+// ion-header {
+//   padding-top: env(safe-area-inset-top);
+// }
+ion-header.custom-header {
+ background: white;
+    z-index: 10;
+    /* padding-top: 18px; */
+    // margin-top: 32px;
+}
+
+
+.header-content {
+    font-size: 23px;
+    margin-top: 23px;
+    font-weight: 600;
+    margin-left: 9px;
+  }
+
+.header {
+    background: #9d4978;
+    margin: 0px;
+    color: white;
+    height: 100px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+  
+.custom-col-8 {
+  flex: 0 0 calc(92%); /* 8 columns out of 12 */
+  max-width: calc(92%);
+}
+
+.custom-col-4 {
+  flex: 0 0 calc(8%); /* 4 columns out of 12 */
+  max-width: calc(8%);
+}
+.grapg_cls {
+  margin-top: 18px;
+}
+ion-row.icon-smily {
+  margin-top: 50px;
+}
+text.highcharts-title {
+  font-size: 13px !important;
+  /* margin-bottom: 11px !important; */
+}
+  .dash-box {
+      background: #963E75;
+    /* height: 100%; */
+    /* width: 100%; */
+    padding: 16px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    /* height: 245px; */
+    text-align: center;
+    color: #fff;
+}
+.custom-datetime::part(calendar-day) {
+  background-color: #F2E1EE;
+  color: black;
+}
+
+.custom-datetime::part(day-body) {
+  background-color: #F2E1EE;
+}
+
+.custom-datetime::part(calendar-day-active) {
+  background-color: #d48bc4 !important;
+  color: #fff;
+}
+
+.custom-datetime {
+  --background: #F2E1EE;
+  --ion-color-primary: #d48bc4;
+  --color: #000;
+}
+ion-modal::part(content) {
+  background-color: #F2E1EE;
+}
+ion-content.md.content-ltr.hydrated {
+    --background: #ededed;
+}
+.chart_subtitle {
+        text-align: center;
+    line-height: 14px;
+    color: #515151;
+    font-size: 12px;
+}
+
+ion-grid.md.hydrated {
+    margin-top: 18px;
+    /* margin-bottom: -38px; */
+}

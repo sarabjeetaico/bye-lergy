@@ -1,0 +1,168 @@
+<ion-header [translucent]="true" class="custom-header">
+    <ion-toolbar lines="none">
+        <ion-title></ion-title>
+        <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding signup-page">
+
+    <!-- <div class="logo-container">
+        <img src="assets/images/glenmark-logo.png" class="logo" />
+    </div> -->
+    <!-- <div class="fix-size"> -->
+    <!-- <img src="assets/images/near_by.png" /> -->
+    <ion-card class="header">
+        <ion-card-content>
+            <p class="header-content">Patient Diary</p>
+
+        </ion-card-content>
+    </ion-card>
+    <!-- </div> -->
+
+
+    <div class="content-section">
+        <div>
+            <div class="section-1">
+                <ion-row>
+                    <div class="scrolable-div">
+                        <div class="mainarea">
+                            <ion-card class="cust-card feeling-cont">
+                                <div>Hi {{ (signupData?.name || 'Amy').split(' ')[0] }}, how are you feeling today?
+                                </div>
+                            </ion-card>
+
+                            <div class="cust-text">
+                                {{ (signupData?.name || 'Amy').split(' ')[0] }}, rate yourself on the below scale and
+                                check
+                                your pattern in "allergy score".
+                            </div>
+
+                            <ion-card class="cust-card2">
+                                <ion-grid>
+                                    <ion-row class="f-vw">
+                                        <ion-col class="cust-col">
+                                            <div *ngIf="rating_card" class="cust-text">How
+                                                troublesome your <span class="inr-txt">nasal symptoms</span>
+                                                (congestion, runny nose, itching, sneezing) have
+                                                been for the last 24 hours?
+                                            </div>
+                                            <div *ngIf="!rating_card" class="cust-text">How
+                                                troublesome your <span class="inr-txt">ocular
+                                                    symptoms</span> (redness, watery eyes, itching) have
+                                                been for the last 24 hours?
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+
+                                    <ion-row>
+                                        <img src="assets/a6f8a2da7fdae16a411840c1d9b2e2d3ead0caff.gif"
+                                            class="mov_hand" />
+                                    </ion-row>
+                                    <ion-row *ngIf="rating_card">
+                                        <ion-range (ionChange)="nasal($event)" [min]="0" [max]="10" [value]="nasalvalue"
+                                            [pin]="true" [ticks]="true" [snaps]="true">
+
+                                        </ion-range>
+                                    </ion-row>
+                                    <ion-row *ngIf="!rating_card">
+                                        <ion-range (ionChange)="occular($event)" [min]="0" [max]="10"
+                                            [value]="occularvalue" [pin]="true" [ticks]="true" [snaps]="true">
+                                        </ion-range>
+                                    </ion-row>
+
+                                    <ion-row>
+                                        <ion-img class="feel-img2" src="../../assets/images/feel2.png"></ion-img>
+                                    </ion-row>
+                                    <ion-row class="notat-row">
+                                        <ion-col class="cust-col">
+                                            Not troublesome at all
+                                        </ion-col>
+                                        <ion-col class="cust-col">
+                                            Troublesome
+                                        </ion-col>
+                                        <ion-col class="cust-col veryat">
+                                            Very troublesome
+                                        </ion-col>
+                                    </ion-row>
+
+                                    <ion-row class="mr-l-3" *ngIf="rating_card">
+                                        <ion-col *ngIf="(nasalvalue<=2) && (nasalvalue > 0) "
+                                            class="to_0_2 image-center">Controlled</ion-col>
+                                        <ion-col class="to_5_3 image-center"
+                                            *ngIf="(nasalvalue > 2) && (nasalvalue <= 5)">
+                                            Partially Controlled
+                                        </ion-col>
+                                        <ion-col class="to_5 image-center" *ngIf="nasalvalue > 5">Uncontrolled</ion-col>
+
+                                    </ion-row>
+                                    <ion-row class="mr-l-3" *ngIf="!rating_card">
+                                        <ion-col *ngIf="(occularvalue<=2) && (occularvalue > 0) "
+                                            class="to_0_2 image-center">Controlled</ion-col>
+                                        <ion-col class="to_5_3 image-center"
+                                            *ngIf="(occularvalue > 2) && (occularvalue <= 5)">
+                                            Partially Controlled
+                                        </ion-col>
+                                        <ion-col class="to_5 image-center"
+                                            *ngIf="occularvalue > 5">Uncontrolled</ion-col>
+
+                                    </ion-row>
+                                    <ion-row *ngIf="rating_card">
+                                        <ion-col class="cust-col lower-cont" *ngIf="nasalvalue>2">
+                                            Kindly Consult your Doctor for more
+                                            details on your score.
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row *ngIf="!rating_card">
+                                        <ion-col class="cust-col lower-cont" *ngIf="occularvalue>2">
+                                            Kindly Consult your Doctor for more
+                                            details on your score.
+                                        </ion-col>
+                                    </ion-row>
+
+                                </ion-grid>
+
+                            </ion-card>
+
+                            <div *ngIf="rating_card" class="float-right">
+                    <ion-button class="forward-btn2" (click)="go_next()">
+                        Next <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </ion-button>
+                </div>
+
+                        </div>
+                        <ion-row>
+                            <ion-card class="cust-card3">
+                                <div class="summery_today" *ngIf="!rating_card">
+                                    Your Summary for today <br>
+                                    Nasal score: {{nasalvalue}} <br>
+                                    Ocular score: {{occularvalue}}
+                                </div>
+                            </ion-card>
+                        </ion-row>
+
+                    </div>
+
+                </ion-row>
+                <div class="chk-cont" *ngIf="!rating_card">
+                    Check the weekly graph of your score in 'Allergy Score'
+                </div>
+                <!-- <div class="float-right" *ngIf="!rating_card">
+                    <ion-button class="forward-btn2" (click)="go_next()">
+                        Next <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </ion-button>
+                </div> -->
+                <div *ngIf="!rating_card" class="float-left">
+                    <ion-button class="back-btn2" (click)="go_next()">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                        Prev
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ion-content>
+
+
+
+<app-footer></app-footer>

@@ -1,0 +1,126 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-title></ion-title>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
+  <p class="title">Create Account</p>
+  <p class="subtitle">Sign up to manage your allergies better</p>
+
+  <div *ngIf="showForm">
+    <!-- Name -->
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (3).png" alt="Icon" class="input_icon" />
+      <ion-input [(ngModel)]="signupData.name" placeholder="Enter your name" type="text"></ion-input>
+    </ion-item>
+
+    <!-- Age -->
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (2).png" alt="Icon" class="input_icon" />
+      <ion-input [(ngModel)]="signupData.age" placeholder="Enter Your Age" type="number"></ion-input>
+    </ion-item>
+
+   
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.doctor" placeholder="Select Your Doctor" interface="popover">
+        <ion-select-option *ngFor="let doctor of dr_list" [value]="doctor.id">{{ doctor.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+     <div class="dust-heading">Select your Allergies</div>
+    </ion-item>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503.png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.dustSubtypes" multiple="true" placeholder="Select Dust Allergies" interface="popover">
+        <ion-select-option *ngFor="let dust of dustOptions" [value]="dust">{{ dust }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+   
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (1).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Allergies" interface="popover">
+        <ion-select-option *ngFor="let pollen of pollenOptions" [value]="pollen">{{ pollen }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503.png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.moldSubtypes" multiple="true" placeholder="Select Mold Allergies" interface="popover">
+        <ion-select-option *ngFor="let mold of moldOptions" [value]="mold">{{ mold }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-grid>
+      <ion-row>
+        <!-- Terms -->
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox slot="start" [(ngModel)]="signupData.agreeTerms" (ionChange)="onCheckboxChange1($event)"
+            name="agreeTerms"></ion-checkbox>
+          <div class="terms-text2">
+            By checking this box you confirm that you have read and agreed to Terms of Services.
+          </div>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <!-- Dust Subtypes -->
+
+  </div>
+  <!-- <div *ngIf="showContainer"> -->
+  <div *ngIf="showContainer" id="consentBox">
+
+    <div class="consent-box">
+      <button class="close-btn" (click)="onSubmit()">&times;</button>
+      <div class="consent-content">
+        <p>
+          By downloading and using the Bye-Lergy mobile application, I hereby acknowledge and provide my
+          explicit
+          consent to the collection and use of the following personal information:
+        </p>
+        <ul>
+          <li>My name and age (or age group)</li>
+          <li>Locality information (via GPS)</li>
+          <li>Doctor’s name (who recommended the app)</li>
+          <li>Type of allergy I am suffering from</li>
+        </ul>
+        <p>
+          This information will be utilized solely to deliver personalized health notifications, track my
+          allergic
+          rhinitis condition, and provide relevant recommendations aimed at enhancing my health outcomes. The
+          Bye-Lergy app will offer personalized engagement by sending real-time notifications based on my
+          location and
+          allergy triggers.
+        </p>
+        <p>
+          I understand that:<br />
+          My data will not be shared with any third parties or stored with Glenmark or any other external
+          entities.<br />
+          I have the right to access, modify, or delete my personal data at any time within the app.<br />
+          I retain the option to withdraw my consent at any point, without affecting my use of the app.
+        </p>
+        <ion-item lines="none" class="checkbox-item">
+          <ion-checkbox [(ngModel)]="signupData.agreeTerms" name="agreeTerms" color="primary">
+          </ion-checkbox>
+          <div class="terms-text2">
+            I confirm that I have read and understood this consent form, and I voluntarily agree to the
+            collection and
+            use of my data as outlined above.
+          </div>
+        </ion-item>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- Submit Button -->
+  <div class="center-button">
+    <ion-button class="custom-btn" (click)="onSignup()" [disabled]="!signupData.agreeTerms">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      Sign Up
+    </ion-button>
+  </div>
+</ion-content>

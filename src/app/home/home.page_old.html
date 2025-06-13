@@ -1,0 +1,90 @@
+<ion-header [translucent]="true" class="ion-padding-top custom-header">
+  <ion-toolbar lines="none">
+    <ion-title></ion-title>
+    <ion-img slot="end" style="width: 22%;" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding dashboard-page scroll-y">
+
+    <!-- <div class="logo-container">
+        <img src="assets/images/glenmark-logo.png" class="logo" />
+    </div> -->
+
+    <!-- <h1 class="title">Create Account</h1>
+  <p class="subtitle">Sign up to manage your allergies better</p> -->
+    <div class="dash-box">
+       <ion-searchbar 
+  [(ngModel)]="searchText" 
+  placeholder="Search any city for real time AQI" 
+  (ionInput)="search($event.detail.value)" 
+  class="custom-searchbar">
+</ion-searchbar>
+
+ <ion-list *ngIf="showList">
+    <ion-item *ngFor="let res of filtercities" (click)="selectLoc(res)">
+      {{ res.city }}
+    </ion-item>
+  </ion-list>
+        <p class="mid_head">Hi {{ (signupData?.name || 'Amy').split(' ')[0] }}, Welcome!
+            Hope you are doing fine.
+        </p>
+        <ion-item class="sec-box" lines="none" style="justify-content: center; text-align: center;">
+          <ion-label style="width: 100%;">
+            <div class="t1">Your allergy index is</div>
+            <div class="t2">Good</div>
+          </ion-label>
+        </ion-item>
+        <!-- <ion-item class="sec-box2" lines="none"> -->
+        <ion-grid class="custom-grid">
+            <ion-row>
+                <ion-col [ngStyle]="{ 'background-color': col1Color }" class="col1">
+                    <p class="val-tx">{{aqiValue}} AQI</p>
+                    <p class="val-tx2">(Air quality index)</p>
+                </ion-col>
+                <ion-col [ngStyle]="{ 'background-color': col2Color }" class="col2">
+                    <p class="val-tx" [ngStyle]="{ 'color': col1Color }">{{polen_value}} PI</p>
+                    <p class="val-tx2" [ngStyle]="{ 'color': col1Color }">(Pollen index)</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-grid class="custom-grid2">
+            <ion-row>
+                <ion-col>
+                    <p class="pol-val">Grass pollen</p>
+                    <p class="pol-val2">{{grass}} (High)</p>
+                </ion-col>
+                <ion-col>
+                    <p class="pol-val">Tree pollen</p>
+                    <p class="pol-val2">{{tree}} (High)</p>
+                </ion-col>
+                <ion-col>
+                    <p class="pol-val">Weed pollen</p>
+                    <p class="pol-val2">{{weed}} (High)</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+       <ion-item class="sec-box3" lines="none">
+           
+                <img src="assets/allergy_scale.png" style="width: 100%;"/>
+        
+        </ion-item>
+
+        <div class="sec-bo4" lines="none">
+          
+            <!-- <ion-label> -->
+                <p class="recom-head">Recommendations</p>
+                <p class="recom-sub-head">Minimal allergen presence. Feel free to enjoy the day.
+Outdoor activities are safe and comfortable.
+ Keep windows open to enjoy fresh air.</p>
+            <!-- </ion-label> -->
+
+        </div>
+        <!-- </ion-item> -->
+
+    </div>
+
+</ion-content>
+<!-- <ion-footer> -->
+  <app-footer></app-footer>
+<!-- </ion-footer> -->

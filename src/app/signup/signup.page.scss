@@ -1,0 +1,232 @@
+ion-header, ion-toolbar {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.glen_logo {
+    width: 22%;
+    margin-top: 44px;
+}
+// ion-header {
+//   padding-top: env(safe-area-inset-top);
+// }
+ion-header.custom-header {
+ background: white;
+    z-index: 10;
+    /* padding-top: 18px; */
+    // margin-top: 32px;
+}
+
+
+.content-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;  // center text horizontally
+  padding: 16px;
+
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 2px;
+    margin-top: 6px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: gray;
+  }
+.custom-bg {
+  --background: #f8f8f8;           // background color
+  --border-color: transparent;     // remove underline
+  --highlight-color-focused: transparent; // remove focus line
+  --inner-padding-end: 10px;
+  --inner-padding-start: 10px;
+  border-radius: 12px;             // ✅ radius outside won't apply unless ion-item is wrapped
+  padding: 7px 12px 1px 12px;
+  font-size: 14px;
+  color: #454040;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // Trick to force border-radius using ::part
+  &::part(native) {
+    border-radius: 12px;           // ✅ actually applies radius to inner part
+    overflow: hidden; 
+                 // in case contents overflow
+  }
+}
+ion-select {
+  flex-grow: 1;
+  --icon-position: end;
+  position: relative;
+}
+
+ion-select::part(icon) {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #454040;
+  font-size: 20px;
+  display: block;
+}
+
+ion-item.custom-bg {
+  position: relative;
+  padding-right: 12px; /* space for icon */
+}
+img.input_icon {
+    width: 35px;
+    /* margin-left: -4px; */
+    margin-right: 22px;
+    /* font-size: 17px; */
+}
+
+.checkbox-item{
+     margin-top: 0px;
+    // margin-left: 14px;
+    .terms-text {
+    margin-left: 0px;
+    font-size: 11px;
+    color: gray;
+    margin-right: 12px;
+}
+    .terms-text2 {
+    margin-left: 0px;
+    font-size: 11px;
+    color: gray;
+    margin-right: 12px;
+    // margin-top: 20px;
+}
+}
+.center-button {
+  display: flex;
+  justify-content: center; // centers horizontally
+  align-items: center;     // optional, if you want vertical centering
+  margin-top: 20px;
+  margin-bottom: 116px !important;
+}
+
+.custom-btn {
+  --background: #963E75;
+  --color: #fff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  text-transform: none;
+  width: 200px; // or auto, or whatever fits your design
+}
+
+      .consent-box {
+    background: #fdf6fb;
+    border: 2px solid #e2bfd9;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    .close-btn {
+      position: absolute;
+      top: -14px;
+      right: -10px;
+      background: #ffffff;
+      border: 2px solid #a05184;
+      border-radius: 50%;
+      color: #a05184;
+      font-size: 20px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    ul {
+      padding-left: 20px;
+      li {
+        margin: 5px 0;
+        list-style-type: disc;
+        color: #7a1f5c;
+      }
+    }
+
+    .checkbox-container {
+      margin-top: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+
+      input[type="checkbox"] {
+        accent-color: #a05184;
+        transform: scale(1.2);
+        margin-top: 4px;
+      }
+
+      strong {
+        font-size: 14px;
+        color: #333;
+      }
+    }
+  }
+  div#consentBox {
+    font-size: 11px;
+    padding: 20px;
+}
+}
+
+ion-content.content-center {
+  background: #963E75 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-content.content-center {
+    background: #2d1430 !important; // A dark purple shade for dark mode
+  }
+  .custom-bg {
+    --background: #3a1d3a;
+    color: #fff;
+  }
+  .title, .subtitle {
+    color: #fff;
+  }
+  .consent-box {
+    background: #2d1430;
+    border-color: #963E75;
+    color: #fff;
+  }
+  .checkbox-container input[type="checkbox"] {
+    accent-color: #a05184;
+    border: 2px solid #a05184 !important;
+    background: #2d1430;
+    box-shadow: 0 0 0 2px #a05184 !important;
+    outline: none !important;
+  }
+  .checkbox-container input[type="checkbox"]:not(:checked) {
+    border: 2px solid #a05184 !important;
+    background: #2d1430;
+    box-shadow: 0 0 0 2px #a05184 !important;
+    outline: none !important;
+  }
+}
+.main-category {
+    margin-left: 12px;
+    margin-right: 28px;
+    font-size: 12px;
+    color: gray;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.dust-heading {
+    color: gray;
+    font-size: 14px;
+    margin-bottom: -17px;
+}

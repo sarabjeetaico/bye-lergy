@@ -1,0 +1,193 @@
+ion-header, ion-toolbar {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.glen_logo {
+    width: 22%;
+    margin-top: 44px;
+}
+// ion-header {
+//   padding-top: env(safe-area-inset-top);
+// }
+
+ion-header.custom-header {
+ background: white;
+    z-index: 10;
+    /* padding-top: 18px; */
+    // margin-top: 32px;
+}
+
+.content-center {
+  text-align: center;  // center text horizontally
+  padding: 16px;
+ion-select::part(icon) {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #454040;
+  font-size: 20px;
+  display: block;
+}
+
+ion-item.custom-bg {
+  position: relative;
+  padding-right: 40px; /* space for icon */
+}
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    // color: gray;
+  }
+ .custom-bg {
+--background: #f8f8f8;
+    --border-color: transparent;
+    --highlight-color-focused: transparent;
+    /* --inner-padding-end: 10px; */
+    --inner-padding-start: 10px;
+    // border-radius: 12px;
+    padding: 34px;
+    margin-top: -47px;
+    /* margin-bottom: -17px; */
+        font-size: 14px;
+    letter-spacing: 1px;
+    color: gray;
+  // Trick to force border-radius using ::part
+  &::part(native) {
+    border-radius: 12px;           // ✅ actually applies radius to inner part
+    overflow: hidden; 
+                 // in case contents overflow
+  }
+}
+img.input_icon {
+    width: 29px;
+    /* margin-left: -4px; */
+    margin-right: 22px;
+    /* font-size: 17px; */
+}
+
+.checkbox-item{
+     margin-top: -9px;
+    margin-left: 25px;
+    .terms-text {
+    margin-left: 12px;
+    font-size: 12px;
+    color: gray;
+    margin-right: 12px;
+}
+    .terms-text2 {
+    margin-left: 12px;
+    font-size: 12px;
+    color: gray;
+    margin-right: 12px;
+    // margin-top: 20px;
+}
+}
+.center-button {
+  display: flex;
+  justify-content: center; // centers horizontally
+  align-items: center;     // optional, if you want vertical centering
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 102px; /* adjust as needed */
+  // border: 1px solid #ccc; /* just for visual demo */
+}
+
+.arrow {
+  position: absolute;
+  left: 10px; /* padding from left */
+  font-size: 24px; /* size of arrow */
+  cursor: pointer;
+}
+
+.title {
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 26px;
+    color: #933d73;
+}
+.button-container {
+    /* align-items: center; */
+    /* text-align: center; */
+    justify-content: center;
+    display: flex;
+}
+  .consent-box {
+    background: #fdf6fb;
+    border: 2px solid #e2bfd9;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    .close-btn {
+      position: absolute;
+      top: -14px;
+      right: -10px;
+      background: #ffffff;
+      border: 2px solid #a05184;
+      border-radius: 50%;
+      color: #a05184;
+      font-size: 20px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+  }
+  div#consentBox {
+    padding: 34px;
+}
+}
+
+ion-item.rmv-bck {
+    margin-left: 23px;
+    margin-right: 23px;
+}
+
+.delete-button {
+    --background: #963E75;
+    width: 60%;
+    margin-bottom: 20px;
+      // width: 47%;
+}
+
+ion-button.privacy-button.ion-color.ion-color-primary.md.button.button-block.button-outline.ion-activatable.ion-focusable.hydrated {
+    --border-radius: 20px;
+    padding: 14px;
+    // width: 40%;
+  }
+
+  .main-category {
+    margin-left: 25px;
+    margin-right: 28px;
+    font-size: 12px;
+    color: gray;
+    font-weight: 700;
+    margin-top: -6px;
+}
+
+.dust-heading {
+    color: gray;
+    font-size: 14px;
+    margin-bottom: 23px;
+    margin-left: 20px;
+    /* margin-top: -2px; */
+}

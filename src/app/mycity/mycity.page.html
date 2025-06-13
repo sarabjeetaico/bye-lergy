@@ -1,0 +1,35 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-title></ion-title>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding signup-page">
+
+
+  <div class="dash-box">
+    <h1>My Location</h1>
+
+    <ion-searchbar [(ngModel)]="searchText" placeholder="Search any city for real time AQI"
+      (ionInput)="search($event.detail.value)" class="custom-searchbar">
+    </ion-searchbar>
+
+    <ion-list *ngIf="showList" class="city-list">
+      <ion-item *ngFor="let res of filtercities" (click)="selectLoc(res)">
+        {{ res.city }}
+      </ion-item>
+    </ion-list>
+
+    <p>Hey {{ (signupData?.name || 'Amy').split(' ')[0] }}, choose your city to check real-time Air Quality Index (AQI)
+      & Pollen Index (PI)</p>
+
+    <div class="arrow">
+      <img (click)="validateCity()" src="assets/images/black-icon.png" class="red" />
+    </div>
+
+
+
+  </div>
+  <img src="assets/iconssssss 1.png" class="full-width-image" />
+</ion-content>

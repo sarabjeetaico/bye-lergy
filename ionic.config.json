@@ -1,0 +1,7 @@
+{
+  "name": "BYE-LERGY",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

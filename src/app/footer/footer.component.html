@@ -1,0 +1,38 @@
+<ion-toolbar color="light">
+  <ion-grid class="footer-grid">
+    <ion-row>
+      <ion-col
+        (click)="navigateTo('profile')"
+        class="footer-tab"
+        [ngClass]="{ active: isActive('profile') }"
+      >
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-col>
+      <ion-col
+        (click)="navigateTo('home')"
+        class="footer-tab"
+        [ngClass]="{ active: isActive('home') }"
+      >
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-col>
+      <ion-col
+        (click)="navigateTo('diary')"
+        class="footer-tab"
+        [ngClass]="{ active: isActive('diary') }"
+      >
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label>Diary</ion-label>
+      </ion-col>
+      <ion-col
+        (click)="navigateTo('score')"
+        class="footer-tab"
+        [ngClass]="{ active: isActive('score') }"
+      >
+        <img src="../../assets/icon/butterfly.png" class="footer-img" />
+        <ion-label>Allergy</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>

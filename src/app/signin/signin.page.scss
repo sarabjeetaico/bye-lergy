@@ -1,0 +1,80 @@
+ion-header, ion-toolbar {
+  --border-width: 0 !important;
+  --border-style: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+ion-header.custom-header {
+ background: white;
+    z-index: 10;
+    /* padding-top: 18px; */
+    margin-top: 20px;
+}
+
+.content-center {
+  text-align: center;  // center text horizontally
+  padding: 16px;
+
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    // color: gray;
+  }
+ .custom-bg {
+  --background: #f8f8f8;           // background color
+  --border-color: transparent;     // remove underline
+  --highlight-color-focused: transparent; // remove focus line
+  --inner-padding-end: 10px;
+  --inner-padding-start: 10px;
+  border-radius: 12px;             // ✅ radius outside won't apply unless ion-item is wrapped
+padding: 31px;
+    margin-top: -12px;
+    margin-bottom: -47px;
+        font-size: 13px;
+  // Trick to force border-radius using ::part
+  &::part(native) {
+    border-radius: 12px;           // ✅ actually applies radius to inner part
+    overflow: hidden; 
+                 // in case contents overflow
+  }
+}
+img.input_icon {
+    width: 35px;
+    /* margin-left: -4px; */
+    margin-right: 22px;
+    /* font-size: 17px; */
+}
+
+.checkbox-item{
+    margin-top: 32px;
+    margin-left: 18px;
+    .terms-text {
+    margin-left: 12px;
+    font-size: 11px;
+    color: gray;
+    margin-right: 12px;
+}
+}
+.center-button {
+  display: flex;
+  justify-content: center; // centers horizontally
+  align-items: center;     // optional, if you want vertical centering
+  margin-top: 20px;
+}
+
+.custom-btn {
+  --background: #963E75;
+  --color: #fff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  text-transform: none;
+  width: 200px; // or auto, or whatever fits your design
+}
+
+}

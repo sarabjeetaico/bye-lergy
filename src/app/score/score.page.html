@@ -1,0 +1,78 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-title></ion-title>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="dash-box">
+    <h3>Allergy score</h3>
+  </div>
+  <div class="grapg_cls">
+    <!-- Start Date Popover -->
+<ion-popover [isOpen]="showStartCalendar" (didDismiss)="showStartCalendar = false">
+  <ng-template>
+    <ion-datetime
+      presentation="date"
+      [value]="fromDate"
+      [max]="toDate"
+      (ionChange)="selectStartDate($event)">
+    </ion-datetime>
+  </ng-template>
+</ion-popover>
+
+<!-- End Date Popover -->
+<ion-popover [isOpen]="showEndCalendar" (didDismiss)="showEndCalendar = false">
+  <ng-template>
+    <ion-datetime
+      presentation="date"
+      [value]="toDate"
+      [min]="fromDate"
+      [max]="today"
+      (ionChange)="selectEndDate($event)">
+    </ion-datetime>
+  </ng-template>
+</ion-popover>
+
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label class="ion-text-center" style="display:block; margin-bottom:4px;">Start Date</ion-label>
+          <ion-button expand="block" (click)="showStartCalendar = true">
+            {{ fromDate ? (fromDate | date:'dd MMM yyyy') : 'Start Date' }}
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label class="ion-text-center" style="display:block; margin-bottom:4px;">End Date</ion-label>
+          <ion-button expand="block" (click)="showEndCalendar = true">
+            {{ toDate ? (toDate | date:'dd MMM yyyy') : 'End Date' }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col class="custom-col-12">
+          <div id="highcharts"></div>
+        </ion-col>
+     
+      </ion-row>
+      <ion-row>
+        <ion-col class="custom-col-12">
+          <div class="chart_subtitle">Want to see air quality and pollen index for that particular time? Tap on a symptom score.</div>
+        </ion-col>
+     
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+
+
+
+</ion-content>
+
+<app-footer></app-footer>

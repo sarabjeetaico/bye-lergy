@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar lines="none">
+    <ion-title></ion-title>
+    <ion-img slot="end" style="width: 142px;" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="content-center">
+  <!-- <p class="title">Sign in to manage your allergies better</p> -->
+  <p class="subtitle">Sign in to manage your allergies better</p>
+
+  <!-- Name -->
+  <ion-item class="custom-bg">
+    <img src="assets/Frame 1503 (3).png" alt="Icon" class="input_icon" />
+    <ion-input [(ngModel)]="signupData.name" placeholder="Enter your name" type="text"></ion-input>
+  </ion-item>
+
+<!-- Doctor -->
+  <ion-item class="custom-bg">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-select [(ngModel)]="signupData.doctor" placeholder="Enter Your Doctor's Name">
+      <ion-select-option value="Dr. Smith">Dr. Smith</ion-select-option>
+      <ion-select-option value="Dr. Patel">Dr. Patel</ion-select-option>
+      <ion-select-option value="Dr. Reddy">Dr. Reddy</ion-select-option>
+      <ion-select-option value="Dr. Mehta">Dr. Mehta</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Submit Button -->
+  <div class="center-button">
+    <ion-button class="custom-btn" (click)="onSignup()">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      Sign In
+    </ion-button>
+  </div>
+</ion-content>

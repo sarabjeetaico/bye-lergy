@@ -1,0 +1,18 @@
+:root {
+  --ion-color-primary: #D48BC4;
+  --ion-color-primary-rgb: 212, 139, 196;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #bb7aaa;
+  --ion-color-primary-tint: #e2b7d6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+    --ion-color-primary: #d48bc4;
+    --ion-color-primary-contrast: #000000;
+    --ion-color-step-50: #2c2c2c;
+  }
+}

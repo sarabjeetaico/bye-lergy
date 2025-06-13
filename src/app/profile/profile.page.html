@@ -1,0 +1,155 @@
+<ion-header [translucent]="true" class="custom-header">
+    <ion-toolbar lines="none">
+        <ion-title></ion-title>
+        <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="content-center">
+<div class="header">
+  <div class="title">{{ (signupData?.name || 'Amy').split(' ')[0] }}'s Profile</div>
+</div>
+  <!-- Name -->
+  <ion-item class="custom-bg">
+    <img src="assets/Frame 1503 (3).png" alt="Icon" class="input_icon" />
+    <ion-input
+      [(ngModel)]="signupData.name"
+      placeholder="Enter your name"
+      type="text"
+      [readonly]="!editMode.name"
+      (ionInput)="onInputChange('name')"
+    ></ion-input>
+    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('name')">
+      <ion-icon
+        [name]="editMode.name ? 'checkmark-outline' : 'create-outline'"
+      ></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Age -->
+  <ion-item class="custom-bg">
+    <img src="assets/Frame 1503 (2).png" alt="Icon" class="input_icon" />
+    <ion-input
+      [(ngModel)]="signupData.age"
+      placeholder="Enter Your Age"
+      type="number"
+      [readonly]="!editMode.age"
+      (ionInput)="onInputChange('age')"
+    ></ion-input>
+    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('age')">
+      <ion-icon
+        [name]="editMode.age ? 'checkmark-outline' : 'create-outline'"
+      ></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Doctor -->
+  <ion-item class="custom-bg">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-select
+      [(ngModel)]="signupData.doctor"
+      placeholder="Change your Doctor's Name"
+      [disabled]="!editMode.doctor"
+      (ionChange)="onInputChange('doctor')"
+    >
+      <ion-select-option *ngFor="let doctor of dr_list" [value]="doctor.id">{{ doctor.name }}</ion-select-option>
+    </ion-select>
+    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('doctor')">
+      <ion-icon
+        [name]="editMode.doctor ? 'checkmark-outline' : 'create-outline'"
+      ></ion-icon>
+    </ion-button>
+  </ion-item>
+
+       <!-- Dust Subtypes -->
+<ion-item lines="none">
+     <div class="dust-heading">Select your Allergies</div>
+    </ion-item>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503.png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.dustSubtypes" multiple="true" placeholder="Select Dust Allergies" [disabled]="!editMode.dustSubtypes" (ionChange)="onInputChange('dustSubtypes')">
+        <ion-select-option *ngFor="let dust of dustOptions" [value]="dust">{{ dust }}</ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('dustSubtypes')">
+        <ion-icon [name]="editMode.dustSubtypes ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+   
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (1).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Allergies" [disabled]="!editMode.pollenSubtypes" (ionChange)="onInputChange('pollenSubtypes')">
+        <ion-select-option *ngFor="let pollen of pollenOptions" [value]="pollen">{{ pollen }}</ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('pollenSubtypes')">
+        <ion-icon [name]="editMode.pollenSubtypes ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503.png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupData.moldSubtypes" multiple="true" placeholder="Select Mold Allergies" [disabled]="!editMode.moldSubtypes" (ionChange)="onInputChange('moldSubtypes')">
+        <ion-select-option *ngFor="let mold of moldOptions" [value]="mold">{{ mold }}</ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('moldSubtypes')">
+        <ion-icon [name]="editMode.moldSubtypes ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+  <!-- Notification Preference -->
+    <ion-item lines="none" class="rmv-bck">
+      <ion-label>
+        <h2><strong>Notification Preference</strong></h2>
+        <p>Personalized Alerts<br><small>Get Alerts Tailored To You</small></p>
+      </ion-label>
+      <ion-toggle slot="end" [(ngModel)]="notificationToggle" color="primary"></ion-toggle>
+    </ion-item>
+
+    <!-- Location Preference -->
+    <ion-item lines="none" class="rmv-bck">
+      <ion-label>
+        <h2><strong>Location Preference</strong></h2>
+      </ion-label>
+      <ion-toggle slot="end" [(ngModel)]="locationToggle" color="primary"></ion-toggle>
+    </ion-item>
+
+    <!-- View Privacy Policy Button -->
+    <div class="button-container">
+      <ion-button expand="block" fill="outline" (click)="onAgreeTermsChange()" color="primary" class="privacy-button">
+        View Privacy Policy
+      </ion-button>
+    </div>
+    <div *ngIf="showContainer" id="consentBox">
+
+      <div class="consent-box">
+        <button class="close-btn" (click)="onClose()">&times;</button>
+        <div class="consent-content">
+          <div class="privacy-section">
+            <h2 class="section-title">Privacy Policy:</h2>
+            <p class="privacy-text">
+              At Bye-Lergy, we are committed to protecting your privacy. The app collects limited, non-sensitive
+              information such as your general location (via GPS), age group, allergy type, and doctor references to
+              provide personalized air quality updates and health tips. This data is used solely to enhance user
+              experience through relevant content and notifications.
+              <br><br>
+              We do not collect or store any personally identifiable or sensitive health information. Users have full
+              control over their data and can modify or delete it at any time within the app. No data is shared with
+              third parties. All information is stored securely in compliance with applicable data protection
+              regulations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+   <ion-item lines="none" class="rmv-bck">
+      <ion-label>
+        <h2><strong>Delete Account</strong></h2>
+        <p>Once You Delete Your Account, You Will Lose Access To All Your Data</p>
+      </ion-label>
+    </ion-item>
+    <div class="delete-section button-container">
+      <ion-button class="delete-button" type="button" (click)="onDeleteAccount()">
+        Delete Account
+      </ion-button>
+    </div>
+</ion-content>
+  <app-footer></app-footer>
