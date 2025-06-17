@@ -14,13 +14,13 @@
     <!-- Name -->
     <ion-item class="custom-bg">
       <img src="assets/Frame 1503 (3).png" alt="Icon" class="input_icon" />
-      <ion-input [(ngModel)]="signupData.name" placeholder="Enter your name" type="text"></ion-input>
+      <ion-input [(ngModel)]="signupData.name" placeholder="Enter your name" type="text" autocapitalize="words"></ion-input>
     </ion-item>
 
     <!-- Age -->
     <ion-item class="custom-bg">
       <img src="assets/Frame 1503 (2).png" alt="Icon" class="input_icon" />
-      <ion-input [(ngModel)]="signupData.age" placeholder="Enter Your Age" type="number"></ion-input>
+      <ion-input [(ngModel)]="signupData.age" placeholder="Enter Your Age" type="number" autocapitalize="words"></ion-input>
     </ion-item>
 
    
@@ -76,7 +76,7 @@
     <div class="consent-box">
       <button class="close-btn" (click)="onSubmit()">&times;</button>
       <div class="consent-content">
-        <p>
+        <p style="color: black;">
           By downloading and using the Bye-Lergy mobile application, I hereby acknowledge and provide my
           explicit
           consent to the collection and use of the following personal information:
@@ -87,7 +87,7 @@
           <li>Doctor’s name (who recommended the app)</li>
           <li>Type of allergy I am suffering from</li>
         </ul>
-        <p>
+        <p style="color: black;">
           This information will be utilized solely to deliver personalized health notifications, track my
           allergic
           rhinitis condition, and provide relevant recommendations aimed at enhancing my health outcomes. The
@@ -95,7 +95,7 @@
           location and
           allergy triggers.
         </p>
-        <p>
+        <p style="color: black;">
           I understand that:<br />
           My data will not be shared with any third parties or stored with Glenmark or any other external
           entities.<br />
