@@ -56,7 +56,14 @@
     <ion-grid>
       <ion-row>
         <ion-col class="custom-col-12">
-          <div id="highcharts"></div>
+          <ion-card>
+  <ng-container *ngIf="isLoading; else chartContent">
+    <div class="shimmer-loader"></div>
+  </ng-container>
+  <ng-template #chartContent>
+    <div id="highcharts"></div>
+  </ng-template>
+</ion-card>
         </ion-col>
      
       </ion-row>
@@ -76,3 +83,4 @@
 </ion-content>
 
 <app-footer></app-footer>
+

@@ -20,6 +20,7 @@ export class ScorePage {
   today = new Date().toISOString().split('T')[0];
   fromDate: string;
   toDate: string;
+  isLoading = false; // Add this flag
 
   constructor(public dataService: DataService) {
     const today = new Date();
@@ -31,23 +32,37 @@ export class ScorePage {
   }
 
   ionViewDidEnter() {
+    this.fetchGraphData();
+  }
+
+  onDateChange() {
+    this.fetchGraphData();
+  }
+
+  fetchGraphData() {
+    this.isLoading = true;
     const selectedRange = { from: this.fromDate, to: this.toDate };
     this.displayDateRange = this.formatDateRange(selectedRange);
     this.dataService.get_grap_data(selectedRange).subscribe((res) => { 
-      this.plotSimpleBarChart(
-        res["day"], 
-        res["occcular"], 
-        res['Nasal'], 
-        res['aqi'], 
-        res['pollen'], 
-        res['date_range']
-      );
+      this.isLoading = false; // Hide loader first
+      setTimeout(() => {      // Wait for DOM to update
+        this.plotSimpleBarChart(
+          res["day"], 
+          res["occcular"], 
+          res['Nasal'], 
+          res['aqi'], 
+          res['pollen'], 
+          res['date_range']
+        );
+      }, 0);
+    }, () => {
+      this.isLoading = false;
     });
   }
 
   plotSimpleBarChart(days: any, o: any, n: any, aqi: any, pollen: any, date_range: any) {
     HighCharts.chart('highcharts', {
-      chart: { type: 'spline' }, // Set default chart type to line/spline
+      chart: { type: 'spline' },
       title: { text: this.displayDateRange },
       xAxis: { categories: days, crosshair: true },
       yAxis: {
@@ -56,12 +71,25 @@ export class ScorePage {
       },
       credits: { enabled: false },
       tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-          '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-        footerFormat: '</table>',
+        useHTML: true,
         shared: true,
-        useHTML: true
+        formatter: function () {
+          // Get the index of the hovered point
+          const idx = this.points && this.points.length > 0 ? this.points[0].index : (typeof this.index === 'number' ? this.index : 0);
+          let s = `<span style="font-size:10px">${days[idx]}</span><table>`;
+          if (this.points) {
+            this.points.forEach(function(point) {
+              const yVal = typeof point.y === 'number' ? point.y.toFixed(1) : '';
+              s += `<tr><td style="color:${point.color};padding:0">${point.series.name}: </td>` +
+                   `<td style="padding:0"><b>${yVal}</b></td></tr>`;
+            });
+          }
+          // Add AQI and Pollen manually
+          s += `<tr><td style="color:#3b82f6;padding:0">AQI: </td><td style="padding:0"><b>${aqi[idx]}</b></td></tr>`;
+          s += `<tr><td style="color:#f59e42;padding:0">Pollen: </td><td style="padding:0"><b>${pollen[idx]}</b></td></tr>`;
+          s += '</table>';
+          return s;
+        }
       },
       series: [
         {
@@ -80,30 +108,19 @@ export class ScorePage {
           name: 'AQI',
           type: "spline",
           data: aqi,
-          color: '#3b82f6'
+          color: '#3b82f6',
+          visible: false,        // Hide line
+          showInLegend: false    // Hide from legend
         },
         {
           name: 'Pollen',
           type: "spline",
           data: pollen,
-          color: '#f59e42'
+          color: '#f59e42',
+          visible: false,        // Hide line
+          showInLegend: false    // Hide from legend
         }
       ]
-    });
-  }
-
-  onDateChange() {
-    const selectedRange = { from: this.fromDate, to: this.toDate };
-    this.displayDateRange = this.formatDateRange(selectedRange);
-    this.dataService.get_grap_data(selectedRange).subscribe((res) => { 
-      this.plotSimpleBarChart(
-        res["day"], 
-        res["occcular"], 
-        res['Nasal'], 
-        res['aqi'], 
-        res['pollen'], 
-        res['date_range']
-      );
     });
   }
 
@@ -131,5 +148,15 @@ export class ScorePage {
     const from = this.formatDate(range.from);
     const to = this.formatDate(range.to);
     return `${from} to ${to}`;
+  }
+
+  // Add this method to your class to show a modal (example using Ionic Alert)
+  async showAqiPollenModal(aqi: number, pollen: number, day: string) {
+    const alert = document.createElement('ion-alert');
+    alert.header = `Details for ${day}`;
+    alert.message = `<b>AQI:</b> ${aqi}<br><b>Pollen:</b> ${pollen}`;
+    alert.buttons = ['OK'];
+    document.body.appendChild(alert);
+    await alert.present();
   }
 }

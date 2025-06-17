@@ -88,8 +88,10 @@ img.input_icon {
 }
 
 .checkbox-item{
-     margin-top: 0px;
-    // margin-left: 14px;
+        margin-top: 0px;
+    --background: #fdf6fb !important;
+    padding: 9px;
+    --border-radius: 10px;
     .terms-text {
     margin-left: 0px;
     font-size: 11px;
@@ -97,7 +99,7 @@ img.input_icon {
     margin-right: 12px;
 }
     .terms-text2 {
-    margin-left: 0px;
+    margin-left: 10px;
     font-size: 11px;
     color: gray;
     margin-right: 12px;
@@ -177,8 +179,9 @@ img.input_icon {
     }
   }
   div#consentBox {
-    font-size: 11px;
+        font-size: 11px;
     padding: 20px;
+    color: #000000;
 }
 }
 

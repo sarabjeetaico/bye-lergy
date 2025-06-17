@@ -98,6 +98,29 @@ ion-content.md.content-ltr.hydrated {
 }
 
 ion-grid.md.hydrated {
-    margin-top: 18px;
+    margin-top: -6px;
     /* margin-bottom: -38px; */
+}
+
+.shimmer-loader {
+  height: 250px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 37%,
+    #f0f0f0 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
 }
