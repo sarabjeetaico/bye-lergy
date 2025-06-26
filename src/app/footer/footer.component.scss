@@ -23,9 +23,10 @@
   }
 
   .footer-img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 2px;
+    width: 31px;
+    /* margin-bottom: -1px; */
+
+    margin-top: -6px;
     filter: grayscale(1); // dim image for inactive
   }
 

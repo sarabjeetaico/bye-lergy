@@ -6,7 +6,7 @@ ion-header, ion-toolbar {
 }
 .glen_logo {
     width: 22%;
-    margin-top: 44px;
+    // margin-top: 44px;
 }
 // ion-header {
 //   padding-top: env(safe-area-inset-top);
@@ -40,12 +40,7 @@ ion-content {
     margin-top: -10px;
   }
 
-  ion-item {
-    --background: #F4F4F4 !important;
-    --border-color: transparent;
-    --border-width: 0;
-    --inner-border-width: 0;
-  }
+
 
   .dash-box {
     background: #963E75;
@@ -96,10 +91,10 @@ ion-content {
 
 
 }
-.city-list {
-  max-height: 200px;  // Or any height suitable for your design
-  overflow-y: auto;
-  background: #D8B8D1; // Optional to match searchbar
-  border-radius: 10px;
-  margin-top: 8px;
-}
+// .city-list {
+//   max-height: 200px;  // Or any height suitable for your design
+//   overflow-y: auto;
+//   background: #D8B8D1; // Optional to match searchbar
+//   border-radius: 10px;
+//   margin-top: 8px;
+// }

@@ -6,7 +6,7 @@ ion-header, ion-toolbar {
 }
 .glen_logo {
     width: 22%;
-    margin-top: 44px;
+    // margin-top: 44px;
 }
 // ion-header {
 //   padding-top: env(safe-area-inset-top);
@@ -87,9 +87,9 @@ text.highcharts-title {
 ion-modal::part(content) {
   background-color: #F2E1EE;
 }
-ion-content.md.content-ltr.hydrated {
-    --background: #ededed;
-}
+// ion-content.md.content-ltr.hydrated {
+//     --background: #ededed;
+// }
 .chart_subtitle {
         text-align: center;
     line-height: 14px;

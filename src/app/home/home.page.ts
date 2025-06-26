@@ -175,6 +175,8 @@ selectedCity: string = ''; // <-- Add this line
       this.signupData['latitude'] = cityObj.Lat;
       this.signupData['longitude'] = cityObj.Long;
       this.signupData['city'] = cityObj.city;
+      // Save updated signupData back to localStorage
+      localStorage.setItem('signupData', JSON.stringify(this.signupData));
       // Now reload AQI and recommendations
       this.aqiLoad();
     }
