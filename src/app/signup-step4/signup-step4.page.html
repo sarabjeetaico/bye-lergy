@@ -1,0 +1,45 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
+  <p class="title">Create Account</p>
+  <p class="subtitle">Sign up to manage your allergies better</p>
+  <p class="subtitle">Which medication are you taking for Allergic Rhinitis management?</p>
+
+  <ion-item class="custom-bg" style="position: relative;">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-select [(ngModel)]="signupService.signupData.medicationOptions" multiple="true" placeholder="Select Treatment Option" interface="popover">
+      <ion-select-option *ngFor="let option of treatmentOptions" [value]="option">{{ option }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="custom-bg" style="position: relative;">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-select [(ngModel)]="signupService.signupData.satisfaction" placeholder="Select Treatment Option" interface="popover">
+      <ion-select-option *ngFor="let option of satisfactionOptions" [value]="option">{{ option }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item lines="none" class="checkbox-item">
+    <ion-checkbox slot="start" [(ngModel)]="signupService.signupData.agreeTerms" name="agreeTerms"></ion-checkbox>
+    <div class="terms-text2">
+      By Checking This Box You Confirm That You Have Read And Agreed To Terms Of Services.
+    </div>
+  </ion-item>
+
+  <div class="center-button">
+    <ion-button class="custom-btn" (click)="onSignup()" [disabled]="!isSignUpEnabled()">
+      <ion-icon name="person-add-outline" slot="start"></ion-icon>
+      Sign Up
+    </ion-button>
+  </div>
+</ion-content>

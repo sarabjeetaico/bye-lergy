@@ -1,11 +1,21 @@
+<<<<<<< HEAD
 import { Component, OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { DataService } from '../services/data.service';
+=======
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgZone } from '@angular/core';
+import { DataService } from '../services/data.service';
+import { SignupService } from '../services/signup.service';
+
+>>>>>>> 1216593 (Add updates to dev branch)
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
+<<<<<<< HEAD
   standalone:false
 })
 export class SignupPage implements OnInit  {
@@ -31,6 +41,15 @@ export class SignupPage implements OnInit  {
 showContainer = false;
   showForm = true;
   constructor(private router: Router, private ngZone: NgZone,public dataService: DataService) {} // ✅ Inject NgZone
+=======
+  standalone: false
+})
+export class SignupPage implements OnInit {
+  dr_list: any;
+
+  constructor(private router: Router, private ngZone: NgZone, public dataService: DataService, public signupService: SignupService) {}
+
+>>>>>>> 1216593 (Add updates to dev branch)
   ngAfterViewInit() {
     const signupData = localStorage.getItem('signupData');
     if (signupData) {
@@ -39,6 +58,7 @@ showContainer = false;
       });
     }
   }
+<<<<<<< HEAD
   onSignup() {
    
     if (!this.signupData.agreeTerms) {
@@ -144,6 +164,32 @@ this.dataService.getDr().subscribe(res => {
       array.push(value);
     } else if (!isChecked && index > -1) {
       array.splice(index, 1);
+=======
+
+  ngOnInit() {
+    const safeTop = getComputedStyle(document.documentElement)
+      .getPropertyValue('--ion-safe-area-top');
+    document.querySelector('ion-header')?.setAttribute(
+      'style',
+      `padding-top: ${safeTop};`
+    );
+
+    this.dataService.getDr().subscribe(res => {
+      this.dr_list = res;
+      console.log("Dr List: ", this.dr_list);
+    });
+  }
+
+  isNextEnabled(): boolean {
+    return !!(this.signupService.signupData.name && this.signupService.signupData.age && this.signupService.signupData.doctor);
+  }
+
+  next() {
+    if (this.isNextEnabled()) {
+      this.router.navigate(['/signup-step2']);
+    } else {
+      alert('Please fill in all required fields.');
+>>>>>>> 1216593 (Add updates to dev branch)
     }
   }
 }

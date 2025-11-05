@@ -1,0 +1,88 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
+  <p class="title">Create Account</p>
+  <p class="subtitle">Sign up to manage your allergies better</p>
+  <p class="subtitle">Have you been tested for allergen via skin prick/blood test?</p>
+
+  <div class="button-row">
+    <ion-button
+      [fill]="signupService.signupData.testedForAllergens === true ? 'solid' : 'outline'"
+      (click)="onTestedChange(true)">
+      Yes
+    </ion-button>
+    <ion-button
+      [fill]="signupService.signupData.testedForAllergens === false ? 'solid' : 'outline'"
+      (click)="onTestedChange(false)">
+      No
+    </ion-button>
+  </div>
+
+  <div *ngIf="signupService.signupData.testedForAllergens === false">
+    <p class="subtitle">I think I am allergic to:</p>
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)"></ion-checkbox>
+      <ion-label>Dust Mites</ion-label>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)"></ion-checkbox>
+      <ion-label>Pollens</ion-label>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)"></ion-checkbox>
+      <ion-label>Mold</ion-label>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Other', $event.detail.checked)"></ion-checkbox>
+      <ion-label>Other</ion-label>
+    </ion-item>
+  </div>
+
+  <div *ngIf="signupService.signupData.testedForAllergens === true">
+    <p class="subtitle">I am allergic to:</p>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.dustSubtypes" multiple="true" placeholder="Select Dust Mites" interface="popover">
+        <ion-select-option value="Dermatophagoides Pteronyssinus">Dermatophagoides Pteronyssinus</ion-select-option>
+        <ion-select-option value="Dermatophagoides Farinae">Dermatophagoides Farinae</ion-select-option>
+        <ion-select-option value="Blomia Tropicalis">Blomia Tropicalis</ion-select-option>
+        <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Types" interface="popover">
+        <ion-select-option value="Pollen">Pollen</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.moldSubtypes" multiple="true" placeholder="Select Mold Types" interface="popover">
+        <ion-select-option value="Aspergillus">Aspergillus</ion-select-option>
+        <ion-select-option value="Penicillium">Penicillium</ion-select-option>
+        <ion-select-option value="Cladosporium">Cladosporium</ion-select-option>
+        <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <div class="center-button">
+    <ion-button class="custom-btn" (click)="next()" [disabled]="!isNextEnabled()">
+      Next
+    </ion-button>
+  </div>
+</ion-content>

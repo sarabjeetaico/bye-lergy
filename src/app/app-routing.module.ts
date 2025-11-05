@@ -11,6 +11,25 @@ const routes: Routes = [
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   },
   {
+<<<<<<< HEAD
+=======
+    path: 'signup-step2',
+    loadChildren: () => import('./signup-step2/signup-step2.module').then( m => m.SignupStep2PageModule)
+  },
+  {
+    path: 'signup-step3',
+    loadChildren: () => import('./signup-step3/signup-step3.module').then( m => m.SignupStep3PageModule)
+  },
+  {
+    path: 'signup-step4',
+    loadChildren: () => import('./signup-step4/signup-step4.module').then( m => m.SignupStep4PageModule)
+  },
+  {
+    path: 'signup-step5',
+    loadChildren: () => import('./signup-step5/signup-step5.module').then( m => m.SignupStep5PageModule)
+  },
+  {
+>>>>>>> 1216593 (Add updates to dev branch)
     path: '',
     redirectTo: 'intro1',
     pathMatch: 'full'

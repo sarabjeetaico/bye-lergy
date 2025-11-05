@@ -1,0 +1,85 @@
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar lines="none">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img>
+    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
+  <p class="title">Create Account</p>
+  <p class="subtitle">Sign up to manage your allergies better</p>
+  <p class="subtitle">I think I have allergic nose</p>
+
+  <div class="button-row">
+    <ion-button
+      [fill]="signupService.signupData.allergicNose === true ? 'solid' : 'outline'"
+      (click)="signupService.signupData.allergicNose = true">
+      Yes
+    </ion-button>
+    <ion-button
+      [fill]="signupService.signupData.allergicNose === false ? 'solid' : 'outline'"
+      (click)="signupService.signupData.allergicNose = false">
+      No
+    </ion-button>
+  </div>
+
+  <div *ngIf="signupService.signupData.allergicNose === true">
+    <p class="subtitle">I Have These Symptoms</p>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.noseSymptoms" multiple="true" placeholder="Select Symptoms" interface="popover">
+        <ion-select-option value="Runny Nose">Runny Nose</ion-select-option>
+        <ion-select-option value="Itchy Eyes">Itchy Eyes</ion-select-option>
+        <ion-select-option value="Nose Block">Nose Block</ion-select-option>
+        <ion-select-option value="Sneezing">Sneezing</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <p class="subtitle">My Nose Problem(s) Happens</p>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.noseFrequency" placeholder="Select Frequency" interface="popover">
+        <ion-select-option value="Less Than 4 Days In A Week">Less Than 4 Days In A Week</ion-select-option>
+        <ion-select-option value="More Than 4 Days In A Week">More Than 4 Days In A Week</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <p class="subtitle">My Nose Problem(s) Is (Are) Causing</p>
+    <ion-item class="custom-bg" style="position: relative;">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-select [(ngModel)]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="popover">
+        <ion-select-option value="Sleep Disturbances">Sleep Disturbances</ion-select-option>
+        <ion-select-option value="Affecting Work/School/Daily Activities">Affecting Work/School/Daily Activities</ion-select-option>
+        <ion-select-option value="Troublesome">Troublesome</ion-select-option>
+        <ion-select-option value="Nothing Above">Nothing Above</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <div *ngIf="signupService.signupData.allergicNose === false">
+    <p class="subtitle">I think I am allergic to:</p>
+    <ion-item class="custom-bg">
+      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Dust Mites" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Pollens" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Mold" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Other" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
+    </ion-item>
+  </div>
+
+  <div class="center-button">
+    <ion-button class="custom-btn" (click)="next()" [disabled]="!isNextEnabled()">
+      Next
+    </ion-button>
+  </div>
+</ion-content>
