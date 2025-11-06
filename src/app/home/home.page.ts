@@ -21,7 +21,7 @@ export class HomePage implements OnInit {
   citydetails: any = {};
   aqiDetails: any = {};
   aqiValue: any;
-  aqi_text_image: string = "assets/images/purple-spinner.gif";
+  aqi_text_image: string = "Loading...";
   reco_level: any;
   level: any;
   polen_value: any;

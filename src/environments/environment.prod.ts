@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl:"https://multipliersolutions.in/glenmark_malaysia_api/",
+  apiUrl:"https://multiplierai.co/glenmark_malaysia_api/",
   AQIURL:"http://api.airvisual.com/v2/nearest_city",
   apikey:"2fd7bb50-a971-4ea2-bc98-d46d26879d5e",
   // apikey:"dd0dabd5451d4502b3e121235211712",
