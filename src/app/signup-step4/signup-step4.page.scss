@@ -32,6 +32,12 @@ ion-header.custom-header {
     font-size: 14px;
     color: gray;
   }
+
+  .allergic-nose {
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    margin-top: 32px !important;
+  }
 }
 .custom-bg {
   --background: #f8f8f8;
@@ -44,6 +50,7 @@ ion-header.custom-header {
   font-size: 14px;
   color: #454040;
   display: flex;
+  margin-top: 10px;
   align-items: center;
   justify-content: space-between;
   &::part(native) {
@@ -53,7 +60,7 @@ ion-header.custom-header {
 }
 
 .checkbox-item{
-        margin-top: 0px;
+            margin-top: 10px;
     --background: #fdf6fb !important;
     padding: 9px;
     --border-radius: 10px;

@@ -50,12 +50,34 @@ ion-header.custom-header {
   font-size: 14px;
   color: #454040;
   display: flex;
+  margin-top: 10px;
   align-items: center;
   justify-content: space-between;
   &::part(native) {
     border-radius: 12px;
     overflow: hidden;
   }
+}
+ion-select {
+  flex-grow: 1;
+  --icon-position: end;
+  position: relative;
+}
+
+ion-select::part(icon) {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #454040;
+  font-size: 20px;
+  display: block;
+}
+
+ion-item.custom-bg {
+  position: relative;
+  padding-right: 12px;
 }
 
 .center-button {

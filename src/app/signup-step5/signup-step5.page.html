@@ -11,16 +11,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
-  <p class="title">Conclusion</p>
-  <p class="subtitle">{{ conclusionMessage }}</p>
-
-  <div class="center-button">
-    <ion-button class="custom-btn" (click)="next()">
-      Next
-    </ion-button>
+  <div class="conclusion-card">
+    <p class="title">Conclusion</p>
+    <p class="subtitle">{{ conclusionMessage }}</p>
   </div>
 
-  <p class="informative-message">
-    Thank you for your time. If you know someone who might have an allergic nose please share this app.
-  </p>
+  <div class="below-card">
+    <p class="informative-message">
+      Thank you for your time. If you know someone who might have an allergic nose please share this app.
+    </p>
+
+    <div class="center-button">
+      <ion-button class="custom-btn" (click)="next()">
+        Next
+      </ion-button>
+    </div>
+  </div>
 </ion-content>
