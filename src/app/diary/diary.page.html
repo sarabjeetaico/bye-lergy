@@ -108,16 +108,54 @@
                                             *ngIf="occularvalue > 5">Uncontrolled</ion-col>
 
                                     </ion-row>
-                                    <ion-row *ngIf="rating_card">
-                                        <ion-col class="cust-col lower-cont" *ngIf="nasalvalue>2">
-                                            Kindly Consult your Doctor for more
-                                            details on your score.
+                                    <ion-row *ngIf="rating_card && nasalvalue > 0">
+                                        <ion-col class="cust-col lower-cont">
+                                            <div *ngIf="nasalvalue <= 2">
+                                                Great job! Your allergic rhinitis symptoms are well controlled.<br>
+                                                ➤ Continue your current treatment as advised by your doctor.<br>
+                                                ➤ Avoid known triggers like dust, pollen, or smoke.<br>
+                                                ➤ Continue tracking your symptoms daily.
+                                            </div>
+                                            <div *ngIf="nasalvalue > 2 && nasalvalue <= 5">
+                                                Your symptoms are partially controlled.<br>
+                                                ➤ You may still feel some discomfort.<br>
+                                                ➤ It’s a good idea to consult your treatment with your doctor.
+                                            </div>
+                                            <div *ngIf="nasalvalue > 5">
+                                                Your symptoms are not well controlled.<br>
+                                                ➤ You may experience significant discomfort or disruption in daily activities.<br>
+                                                ➤ Consult your doctor promptly to review or adjust your treatment.
+                                            </div>
                                         </ion-col>
                                     </ion-row>
-                                    <ion-row *ngIf="!rating_card">
-                                        <ion-col class="cust-col lower-cont" *ngIf="occularvalue>2">
-                                            Kindly Consult your Doctor for more
-                                            details on your score.
+                                    <ion-row *ngIf="rating_card && nasalvalue > 0">
+                                        <ion-col class="cust-col lower-cont text-center">
+                                            Kindly Consult your Doctor for more details on your score.
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row *ngIf="!rating_card && occularvalue > 0">
+                                        <ion-col class="cust-col lower-cont">
+                                            <div *ngIf="occularvalue <= 2">
+                                                Great job! Your allergic rhinitis symptoms are well controlled.<br>
+                                                ➤ Continue your current treatment as advised by your doctor.<br>
+                                                ➤ Avoid known triggers like dust, pollen, or smoke.<br>
+                                                ➤ Continue tracking your symptoms daily.
+                                            </div>
+                                            <div *ngIf="occularvalue > 2 && occularvalue <= 5">
+                                                Your symptoms are partially controlled.<br>
+                                                ➤ You may still feel some discomfort.<br>
+                                                ➤ It’s a good idea to consult your treatment with your doctor.
+                                            </div>
+                                            <div *ngIf="occularvalue > 5">
+                                                Your symptoms are not well controlled.<br>
+                                                ➤ You may experience significant discomfort or disruption in daily activities.<br>
+                                                ➤ Consult your doctor promptly to review or adjust your treatment.
+                                            </div>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row *ngIf="!rating_card && occularvalue > 0">
+                                        <ion-col class="cust-col lower-cont text-center">
+                                            Kindly Consult your Doctor for more details on your score.
                                         </ion-col>
                                     </ion-row>
 
