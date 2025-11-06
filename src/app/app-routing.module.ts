@@ -11,8 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   },
   {
-<<<<<<< HEAD
-=======
     path: 'signup-step2',
     loadChildren: () => import('./signup-step2/signup-step2.module').then( m => m.SignupStep2PageModule)
   },
@@ -29,7 +27,6 @@ const routes: Routes = [
     loadChildren: () => import('./signup-step5/signup-step5.module').then( m => m.SignupStep5PageModule)
   },
   {
->>>>>>> 1216593 (Add updates to dev branch)
     path: '',
     redirectTo: 'intro1',
     pathMatch: 'full'
