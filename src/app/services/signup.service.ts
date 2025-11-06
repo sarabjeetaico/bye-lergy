@@ -15,7 +15,7 @@ export class SignupService {
     suspectedAllergens: [] as string[], // for no tested: dust, pollen, mold, other
     allergicNose: null as boolean | null, // yes/no
     noseSymptoms: [] as string[], // runny, itchy, block, sneezing
-    noseFrequency: [] as string[], // less or more than 4 days
+    noseFrequency: '' as string, // less or more than 4 days
     noseImpact: [] as string[], // sleep, work, troublesome, nothing
     medicationOptions: [] as string[], // treatment options (multiple)
     satisfaction: '', // satisfaction feedback (single)
@@ -39,7 +39,7 @@ export class SignupService {
       suspectedAllergens: [] as string[],
       allergicNose: null as boolean | null,
       noseSymptoms: [] as string[],
-      noseFrequency: [] as string[],
+      noseFrequency: '' as string,
       noseImpact: [] as string[],
       medicationOptions: [] as string[],
       satisfaction: '',

@@ -13,23 +13,23 @@
 <ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
   <p class="title">Create Account</p>
   <p class="subtitle">Sign up to manage your allergies better</p>
-  <p class="subtitle">I think I have allergic nose</p>
+  <p class="subtitle allergic-nose">I think I have allergic nose</p>
 
   <div class="button-row">
     <ion-button
       [fill]="signupService.signupData.allergicNose === true ? 'solid' : 'outline'"
-      (click)="signupService.signupData.allergicNose = true">
+      (click)="setAllergicNose(true)">
       Yes
     </ion-button>
     <ion-button
       [fill]="signupService.signupData.allergicNose === false ? 'solid' : 'outline'"
-      (click)="signupService.signupData.allergicNose = false">
+      (click)="setAllergicNose(false)">
       No
     </ion-button>
   </div>
 
   <div *ngIf="signupService.signupData.allergicNose === true">
-    <p class="subtitle">I Have These Symptoms</p>
+    <p class="subtitle left-bold">I Have These Symptoms</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
       <ion-select [(ngModel)]="signupService.signupData.noseSymptoms" multiple="true" placeholder="Select Symptoms" interface="popover">
@@ -40,7 +40,7 @@
       </ion-select>
     </ion-item>
 
-    <p class="subtitle">My Nose Problem(s) Happens</p>
+    <p class="subtitle left-bold">My Nose Problem(s) Happens</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
       <ion-select [(ngModel)]="signupService.signupData.noseFrequency" placeholder="Select Frequency" interface="popover">
@@ -49,7 +49,7 @@
       </ion-select>
     </ion-item>
 
-    <p class="subtitle">My Nose Problem(s) Is (Are) Causing</p>
+    <p class="subtitle left-bold">My Nose Problem(s) Is (Are) Causing</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
       <ion-select [(ngModel)]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="popover">
@@ -64,16 +64,16 @@
   <div *ngIf="signupService.signupData.allergicNose === false">
     <p class="subtitle">I think I am allergic to:</p>
     <ion-item class="custom-bg">
-      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Dust Mites" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Dust Mites')" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Pollens" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Pollens')" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Mold" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Mold')" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [(ngModel)]="signupService.signupData.suspectedAllergens" value="Other" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Other')" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
     </ion-item>
   </div>
 

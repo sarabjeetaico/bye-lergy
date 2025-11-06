@@ -32,6 +32,12 @@ ion-header.custom-header {
     font-size: 14px;
     color: gray;
   }
+
+  .allergic-nose {
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    margin-top: 32px !important;
+  }
 }
 .custom-bg {
   --background: #f8f8f8;

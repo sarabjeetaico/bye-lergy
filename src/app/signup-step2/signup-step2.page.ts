@@ -72,7 +72,7 @@ export class SignupStep2Page implements OnInit {
     if (this.signupService.signupData.allergicNose === true) {
       // "Yes" selected: require at least one from each dropdown
       return this.signupService.signupData.noseSymptoms.length > 0 &&
-             this.signupService.signupData.noseFrequency.length > 0 &&
+             this.signupService.signupData.noseFrequency !== '' &&
              this.signupService.signupData.noseImpact.length > 0;
     } else if (this.signupService.signupData.allergicNose === false) {
       // "No" selected: require at least one suspected allergen checked
@@ -88,6 +88,23 @@ export class SignupStep2Page implements OnInit {
   }
 
 
+
+  setAllergicNose(value: boolean) {
+    this.signupService.signupData.allergicNose = value;
+    if (value === true) {
+      // Reset No fields
+      this.signupService.signupData.suspectedAllergens = [];
+    } else {
+      // Reset Yes fields
+      this.signupService.signupData.noseSymptoms = [];
+      this.signupService.signupData.noseFrequency = '';
+      this.signupService.signupData.noseImpact = [];
+      // Initialize suspectedAllergens as an empty array if it's undefined
+      if (!this.signupService.signupData.suspectedAllergens) {
+        this.signupService.signupData.suspectedAllergens = [];
+      }
+    }
+  }
 
   back() {
     this.router.navigate(['/signup']);
