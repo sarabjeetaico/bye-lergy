@@ -1,0 +1,39 @@
+<ion-content class="ion-padding">
+  <div class="concern-box">
+    <div class="modal-title">
+      <h2>Terms & Privacy</h2>
+    </div>
+
+    <div class="content">
+      <p class="subtitle">Please review and agree to the following terms:</p>
+
+      <div class="terms-list">
+        <ion-item lines="none">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            Allow access to your location for accurate allergy tracking
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-icon name="medical-outline" slot="start"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            Share your allergy information with your healthcare provider
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-icon name="notifications-outline" slot="start"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            Receive personalized alerts about air quality
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <ion-button expand="block" fill="outline" (click)="cancel()">Cancel</ion-button>
+      <ion-button expand="block" (click)="agree()">I Agree</ion-button>
+    </div>
+  </div>
+</ion-content>

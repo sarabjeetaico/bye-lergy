@@ -105,3 +105,160 @@ ion-content.content-center {
     color: #fff;
   }
 }
+
+:host {
+  .modal-wrapper {
+    --height: auto !important;
+  }
+}
+
+::ng-deep .concern-modal {
+  &::part(content) {
+    position: relative !important;
+    width: 90% !important;
+    max-width: 360px !important;
+    height: auto !important;
+    max-height: 90% !important;
+    margin: auto !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+    overflow: hidden !important;
+  }
+
+  .ion-page {
+    position: relative !important;
+    contain: content !important;
+    max-height: 90vh !important;
+  }
+
+  ion-content {
+    --background: #ffffff !important;
+  }
+
+  &::part(backdrop) {
+    background: rgba(0, 0, 0, 0.6) !important;
+  }
+}
+
+/* Consent Modal Container (scoped) */
+#consentBox {
+  display: block;
+  font-size: 13px;
+  padding: 24px;
+  color: #000;
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(60, 16, 44, 0.12);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Consent Box Styling (scoped) */
+#consentBox .consent-box {
+  background: #fdf6fb;
+  border: 2px solid #e2bfd9;
+  border-radius: 16px;
+  padding: 28px 22px 22px 22px;
+  max-width: 420px;
+  margin: 40px auto;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  text-align: left;
+}
+
+/* Close Button Styling (scoped) */
+#consentBox .close-btn {
+  position: absolute;
+  top: -16px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border: 2px solid #a05184;
+  color: #a05184;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background .3s;
+}
+#consentBox .close-btn:hover {
+  background: #fae2f0;
+}
+
+/* Consent Content (scoped) */
+#consentBox .consent-content p {
+  color: #171717;
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* List Styling (scoped) */
+#consentBox .consent-content ul {
+  padding-left: 20px;
+}
+#consentBox .consent-content ul li {
+  margin: 6px 0;
+  color: #7a1f5c;
+  font-size: 13px;
+  list-style-type: disc;
+}
+
+/* Checkbox Section (scoped) */
+#consentBox .checkbox-item {
+  margin-top: 15px;
+  background: #fdf6fb;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+#consentBox ion-checkbox {
+  margin-right: 10px;
+  accent-color: #a05184;
+}
+#consentBox .terms-text2 {
+  margin-left: 8px;
+  font-size: 12px;
+  color: gray;
+}
+
+/* Responsive Modal for Mobile (scoped) */
+@media(max-width: 550px) {
+  #consentBox .consent-box {
+    width: 95vw;
+    margin: 10px auto;
+    padding: 18px 6px 16px 6px;
+  }
+  #consentBox {
+    padding: 8px;
+  }
+}
+
+/* Dark Mode Support (scoped) */
+@media (prefers-color-scheme: dark) {
+  #consentBox .consent-box {
+    background: #2d1430;
+    border-color: #963E75;
+    color: #fff;
+  }
+  #consentBox {
+    background: rgba(60, 16, 44, 0.28);
+    color: #fff;
+  }
+  #consentBox .consent-content p,
+  #consentBox .terms-text2 {
+    color: #fff;
+  }
+  #consentBox .consent-content ul li {
+    color: #f4a5ee;
+  }
+}

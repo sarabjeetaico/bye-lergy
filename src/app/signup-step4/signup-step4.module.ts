@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { SignupStep4PageRoutingModule } from './signup-step4-routing.module';
-
 import { SignupStep4Page } from './signup-step4.page';
 
 @NgModule({
@@ -13,8 +10,8 @@ import { SignupStep4Page } from './signup-step4.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SignupStep4PageRoutingModule
-  ],
-  declarations: [SignupStep4Page]
+    SignupStep4PageRoutingModule,
+    SignupStep4Page
+  ]
 })
 export class SignupStep4PageModule {}

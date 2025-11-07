@@ -12,6 +12,35 @@
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
+.concern-modal {
+  /* Ensure the modal wrapper is centered and sized so ion-content can render */
+  .modal-wrapper {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 420px !important;
+    max-height: 90vh !important;
+    height: 60vh !important; /* force a visible height while debugging */
+    overflow: auto !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.24) !important;
+    background: #ffffff !important; /* ensure background is visible */
+  }
+
+  /* Backdrop opacity */
+  &::part(backdrop) {
+    background: rgba(0,0,0,0.6) !important;
+  }
+
+  /* Round modal content */
+  &::part(content) {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+}
+
 /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
@@ -52,3 +81,53 @@ ion-content {
 .header-md::after {
   bottom: -5px;
 }
+
+/* Shared dropdown / select styles used across signup pages */
+.custom-bg {
+  --background: #f8f8f8;           /* background color */
+  --border-color: transparent;     /* remove underline */
+  --highlight-color-focused: transparent; /* remove focus line */
+  --inner-padding-end: 10px;
+  --inner-padding-start: 10px;
+  border-radius: 12px;
+  padding: 7px 12px 1px 12px;
+  font-size: 14px;
+  color: #454040;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Force border-radius on the inner native part of ion-item */
+.custom-bg::part(native) {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+ion-select {
+  flex-grow: 1;
+  --icon-position: end;
+  position: relative;
+}
+
+ion-select::part(icon) {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #454040;
+  font-size: 20px;
+  display: block;
+}
+
+ion-item.custom-bg {
+  position: relative;
+  padding-right: 12px; /* space for icon */
+}
+
+img.input_icon {
+  width: 35px;
+  margin-right: 22px;
+}
+

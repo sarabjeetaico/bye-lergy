@@ -77,6 +77,33 @@ ion-card {
     font-size: 20px;
 }
 
+.weather-row {
+    margin-left: 34px;
+    margin-right: 34px;
+    margin-bottom: 21px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.weather-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.weather-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .sec-box2 {
 margin-left: 14px;
     margin-right: 14px;

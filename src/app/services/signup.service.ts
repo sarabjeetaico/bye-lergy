@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SignupData } from '../models/signup.model';
 
 @Injectable({
   providedIn: 'root'

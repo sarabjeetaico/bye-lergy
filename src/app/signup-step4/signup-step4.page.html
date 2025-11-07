@@ -24,17 +24,65 @@
 
   <ion-item class="custom-bg" style="position: relative;">
     <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-    <ion-select [(ngModel)]="signupService.signupData.satisfaction" placeholder="Select Treatment Option" interface="popover">
+    <ion-select [(ngModel)]="signupService.signupData.satisfaction" placeholder="About my medication(s), I think" interface="popover">
       <ion-select-option *ngFor="let option of satisfactionOptions" [value]="option">{{ option }}</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item lines="none" class="checkbox-item">
-    <ion-checkbox slot="start" [(ngModel)]="signupService.signupData.agreeTerms" name="agreeTerms"></ion-checkbox>
+    <ion-checkbox
+      slot="start"
+      [(ngModel)]="signupService.signupData.agreeTerms"
+      name="agreeTerms"
+      [disabled]="!isCheckboxEnabled()"
+      (ionChange)="onTermsChange($event)">
+    </ion-checkbox>
     <div class="terms-text2">
       By Checking This Box You Confirm That You Have Read And Agreed To Terms Of Services.
     </div>
   </ion-item>
+
+  <!-- Consent Modal -->
+<ion-modal [isOpen]="showConsentModal" cssClass="consent-modal" backdropDismiss="false">
+  <ng-template>
+    <div id="consentBox">
+      <div class="consent-box">
+        <button class="close-btn" (click)="closeConsentModal(false)">&times;</button>
+        <div class="consent-content">
+          <p style="color: black;">
+            By downloading and using the Bye-Lergy mobile application, I hereby acknowledge and provide my explicit consent to the collection and use of the following personal information:
+          </p>
+          <ul>
+            <li>My name and age (or age group)</li>
+            <li>Locality information (via GPS)</li>
+            <li>Doctor’s name (who recommended the app)</li>
+            <li>Type of allergy I am suffering from</li>
+          </ul>
+          <p style="color: black;">
+            This information will be utilized solely to deliver personalized health notifications, track my allergic rhinitis condition, and provide relevant recommendations aimed at enhancing my health outcomes. The Bye-Lergy app will offer personalized engagement by sending real-time notifications based on my location and allergy triggers.
+          </p>
+          <p style="color: black;">
+            I understand that:<br />
+            My data will not be shared with any third parties or stored with Glenmark or any other external entities.<br />
+            I have the right to access, modify, or delete my personal data at any time within the app.<br />
+            I retain the option to withdraw my consent at any point, without affecting my use of the app.
+          </p>
+          <ion-item lines="none" class="checkbox-item">
+            <ion-checkbox [(ngModel)]="signupService.signupData.agreeTerms" name="agreeTerms" color="primary">
+            </ion-checkbox>
+            <div class="terms-text2">
+              I confirm that I have read and understood this consent form, and I voluntarily agree to the collection and use of my data as outlined above.
+            </div>
+          </ion-item>
+          <div class="center-button">
+            <ion-button color="primary" (click)="closeConsentModal(true)">I Agree</ion-button>
+            <ion-button color="medium" (click)="closeConsentModal(false)">Cancel</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>
 
   <div class="center-button">
     <ion-button class="custom-btn" (click)="onSignup()" [disabled]="!isSignUpEnabled()">

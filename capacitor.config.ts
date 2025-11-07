@@ -5,7 +5,6 @@ const config: CapacitorConfig = {
   appName: 'BYE-LERGY',
   webDir: 'www',
   android: {
-    style: 'default',
     backgroundColor: '#ffffff'
   },
   plugins: {

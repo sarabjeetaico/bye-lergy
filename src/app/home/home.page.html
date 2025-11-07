@@ -28,6 +28,16 @@
     <p class="mid_head">Hi {{ (signupData?.name || 'Amy').split(' ')[0] }}, Welcome!
       Hope you are doing fine.
     </p>
+    <ion-row class="weather-row">
+      <ion-col size="6" class="weather-col">
+        <ion-icon name="water" class="weather-icon"></ion-icon>
+        <span class="weather-text">{{ humidity }}</span>
+      </ion-col>
+      <ion-col size="6" class="weather-col">
+        <img [src]="icon" class="weather-icon" />
+        <span class="weather-text">{{ temp }}</span>
+      </ion-col>
+    </ion-row>
     <ion-item class="sec-box" lines="none" style="justify-content: center; text-align: center;">
       <ion-label style="width: 100%;">
         <div class="t1">Your allergy index is</div>

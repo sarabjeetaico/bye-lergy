@@ -246,37 +246,38 @@ export class DataService {
       })
     );
   }
-  userSignup(selectedRange:any): Observable<any> {
-    
-    let data = {
+  userSignup(signupData: any): Observable<any> {
+    const data = {
       function: "signup_user",
       deviceId: localStorage.getItem('deviceId'),
-      selectedRange:selectedRange
-    }
-    console.log("payload: ",data)
+      selectedRange: signupData  // Match the PHP API expectation
+    };
+    
+    console.log("payload: ", data);
     return this.http.post(environment.apiUrl, data, { observe: 'response' }).pipe(
       map((res: HttpResponse<any>) => {
-        console.log(res.body)
+        console.log(res.body);
         if (res.status == 200) {
-          return res.body
+          return res.body;
         } else {
-          return []
+          return [];
         }
       })
     );
   }
 
-  get_grap_data_for_range(range: { from: string, to: string }): Observable<any> {
-    let data = {
+  get_grap_data_for_range(range: { from: string; to: string }): Observable<any> {
+    const data = {
       function: "show_graph",
       deviceId: localStorage.getItem('deviceId'),
       from: range.from,
       to: range.to
     };
+    
     console.log('Fetching graph data for range:', data);
     return this.http.post(environment.apiUrl, data, { observe: 'response' }).pipe(
       map((res: HttpResponse<any>) => {
-        console.log('from:', data.from, 'to:', data.to); // Log both from and to
+        console.log('from:', data.from, 'to:', data.to);
         console.log(res.body);
         if (res.status == 200) {
           return res.body;

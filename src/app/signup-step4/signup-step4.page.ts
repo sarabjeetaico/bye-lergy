@@ -2,12 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignupService } from '../services/signup.service';
 import { DataService } from '../services/data.service';
+import { ModalController, IonicModule } from '@ionic/angular';
+// ...removed ConcernPopupComponent import...
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-signup-step4',
   templateUrl: './signup-step4.page.html',
   styleUrls: ['./signup-step4.page.scss'],
-  standalone: false
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+  // ...removed ConcernPopupComponent from imports...
+  ]
 })
 export class SignupStep4Page implements OnInit {
   treatmentOptions = [
@@ -24,12 +34,50 @@ export class SignupStep4Page implements OnInit {
     'I Need More Or Better Medications'
   ];
 
-  constructor(private router: Router, public signupService: SignupService, private dataService: DataService) {}
+  constructor(
+    private router: Router,
+    public signupService: SignupService,
+    private dataService: DataService,
+    private modalCtrl: ModalController
+  ) {}
 
   ngOnInit() {}
 
   isSignUpEnabled(): boolean {
     return this.signupService.signupData.medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '' && this.signupService.signupData.agreeTerms;
+  }
+
+  isCheckboxEnabled(): boolean {
+    return this.signupService.signupData.medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '';
+  }
+
+  showConsentModal = false;
+
+  onTermsChange(event: any) {
+    if (event.detail.checked) {
+      this.showConsentModal = true;
+    } else {
+      this.signupService.signupData.agreeTerms = false;
+    }
+  }
+
+  closeConsentModal(agreed: boolean) {
+    // Close modal first
+    this.showConsentModal = false;
+    this.signupService.signupData.agreeTerms = agreed;
+
+    // If user agreed and the form is complete, proceed to next step after modal close animation
+    if (agreed) {
+      if (this.isSignUpEnabled()) {
+        // Wait a small amount to allow the modal to close visually before navigating
+        setTimeout(() => {
+          this.onSignup();
+        }, 250);
+      } else {
+        // Keep the checkbox checked so user can complete remaining fields
+        console.log('Consent given but form incomplete; awaiting remaining fields.');
+      }
+    }
   }
 
   onSignup() {
@@ -38,27 +86,9 @@ export class SignupStep4Page implements OnInit {
       return;
     }
 
-    // Get location and submit
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.signupService.signupData.latitude = position.coords.latitude;
-        this.signupService.signupData.longitude = position.coords.longitude;
-
-        this.dataService.getCityFromLatLong(this.signupService.signupData.latitude!, this.signupService.signupData.longitude!).subscribe(cityName => {
-          if (cityName) {
-            this.signupService.signupData.city = cityName;
-        this.dataService.userSignup(this.signupService.signupData).subscribe((res) => {
-              localStorage.setItem('signupData', JSON.stringify(this.signupService.signupData));
-              this.router.navigate(['/signup-step5']);
-            });
-          }
-        });
-      },
-      (error) => {
-        console.error('Location access denied:', error);
-        alert('Please allow location access to proceed.');
-      }
-    );
+    // Store in localStorage and proceed to next step
+    localStorage.setItem('signupData', JSON.stringify(this.signupService.signupData));
+    this.router.navigate(['/signup-step5']);
   }
 
   back() {

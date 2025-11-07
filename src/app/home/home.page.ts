@@ -30,6 +30,7 @@ export class HomePage implements OnInit {
   allergies: any[] = [];
   icon: string = "assets/images/purple-spinner.gif";
   temp: any;
+  humidity: any;
   tree: any;
   grass: any;
   weed: any;
@@ -85,6 +86,7 @@ selectedCity: string = ''; // <-- Add this line
       this.polen_value = this.aqiDetails['pollen_value'];
       this.icon = this.aqiDetails['icon'];
       this.temp = this.aqiDetails['temp'];
+      this.humidity = this.aqiDetails['humidity'];
       this.wind_deg = this.aqiDetails['wind_deg'];
       this.searchText = this.signupData['city'];
       this.weed = `${this.aqiDetails['pollen_count']['weed_pollen']} ( ${this.aqiDetails['pollen_risk']['weed_pollen']} )`;
