@@ -9,6 +9,7 @@ export class SignupService {
     name: '',
     age: null as number | null,
     doctor: '',
+    other_doctor: '',
     testedForAllergens: null as boolean | null, // yes/no for tested
     dustSubtypes: [] as string[],
     pollenSubtypes: [] as string[],
@@ -33,6 +34,7 @@ export class SignupService {
       name: '',
       age: null as number | null,
       doctor: '',
+      other_doctor: '',
       testedForAllergens: null as boolean | null,
       dustSubtypes: [] as string[],
       pollenSubtypes: [] as string[],

@@ -2,6 +2,7 @@ export interface SignupData {
   name: string;
   age: number;
   doctor: string;
+  other_doctor?: string;
   agreeTerms: boolean;
   latitude?: number;
   longitude?: number;

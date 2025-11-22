@@ -44,9 +44,11 @@ export class SignupPage implements OnInit {
   }
 
   isNextEnabled(): boolean {
-    return !!(this.signupService.signupData.name && 
-             this.signupService.signupData.age && 
-             this.signupService.signupData.doctor);
+    const data = this.signupService.signupData;
+    if (data.doctor === 'other') {
+      return !!(data.name && data.age && data.doctor && data.other_doctor);
+    }
+    return !!(data.name && data.age && data.doctor);
   }
 
   next() {

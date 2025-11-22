@@ -87,6 +87,7 @@ export class SignupStep4Page implements OnInit {
     }
 
     // Store in localStorage and proceed to next step
+    console.log('Storing signupData to localStorage in step 4:', this.signupService.signupData);
     localStorage.setItem('signupData', JSON.stringify(this.signupService.signupData));
     this.router.navigate(['/signup-step5']);
   }

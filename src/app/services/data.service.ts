@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -11,11 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DataService {
 
-  constructor(public http: HttpClient) { 
+  constructor(public http: HttpClient) {
     const deviceId = localStorage.getItem('deviceId');
     if (!deviceId) {
       localStorage.setItem('deviceId', uuidv4());
-    } 
+    }
   }
 
   headers: any = new HttpHeaders().set(
@@ -27,6 +27,7 @@ export class DataService {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${environment.googleMapsApiKey}`;
     return this.http.get(url).pipe(
       map((res: any) => {
+        console.log('Google Maps Geocoding API response:', res);
         if (res.status === 'OK') {
           const results = res.results;
           for (const result of results) {
@@ -74,9 +75,10 @@ export class DataService {
         } else {
           return []
         }
-      }, (err:any) => {
+      }),
+      catchError((err: any) => {
         console.error('getcity API error:', err); // <-- log error
-        return [];
+        return of([]);
       })
     );
   }
@@ -92,14 +94,15 @@ export class DataService {
         } else {
           return []
         }
-      }, (err:any) => {
+      }),
+      catchError((err: any) => {
         console.error('getDr API error:', err); // <-- log error
-        return [];
+        return of([]);
       })
     );
   }
 
- 
+
 
   getrecommendations(aqi_level: any): Observable<any> {
     let data = {
@@ -194,9 +197,10 @@ export class DataService {
         } else {
           return []
         }
-      }, (err:any) => {
+      }),
+      catchError((err: any) => {
         console.error('getAQI API error:', err); // <-- log error
-        return [];
+        return of([]);
       })
     );
   }
@@ -252,7 +256,7 @@ export class DataService {
       deviceId: localStorage.getItem('deviceId'),
       selectedRange: signupData  // Match the PHP API expectation
     };
-    
+
     console.log("payload: ", data);
     return this.http.post(environment.apiUrl, data, { observe: 'response' }).pipe(
       map((res: HttpResponse<any>) => {
@@ -273,7 +277,7 @@ export class DataService {
       from: range.from,
       to: range.to
     };
-    
+
     console.log('Fetching graph data for range:', data);
     return this.http.post(environment.apiUrl, data, { observe: 'response' }).pipe(
       map((res: HttpResponse<any>) => {
@@ -312,6 +316,6 @@ export class DataService {
       const deviceId = localStorage.getItem('deviceId');
       if (!deviceId) {
         localStorage.setItem('deviceId', uuidv4());
-      } 
+      }
     }
 }

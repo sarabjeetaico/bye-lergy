@@ -47,11 +47,13 @@ export class ScorePage {
       this.isLoading = false; // Hide loader first
       setTimeout(() => {      // Wait for DOM to update
         this.plotSimpleBarChart(
-          res["day"], 
-          res["occcular"], 
-          res['Nasal'], 
-          res['aqi'], 
-          res['pollen'], 
+          res["day"],
+          res["occcular"],
+          res['Nasal'],
+          res['aqi'],
+          res['pollen'],
+          res['humidity'],
+          res['temperature'],
           res['date_range']
         );
       }, 0);
@@ -60,7 +62,7 @@ export class ScorePage {
     });
   }
 
-  plotSimpleBarChart(days: any, o: any, n: any, aqi: any, pollen: any, date_range: any) {
+  plotSimpleBarChart(days: any, o: any, n: any, aqi: any, pollen: any, humidity: any, temperature: any, date_range: any) {
     HighCharts.chart('highcharts', {
       chart: { type: 'spline' },
       title: { text: this.displayDateRange },
@@ -84,9 +86,11 @@ export class ScorePage {
                    `<td style="padding:0"><b>${yVal}</b></td></tr>`;
             });
           }
-          // Add AQI and Pollen manually
+          // Add AQI, Pollen, Humidity, and Temperature manually
           s += `<tr><td style="color:#3b82f6;padding:0">AQI: </td><td style="padding:0"><b>${aqi[idx]}</b></td></tr>`;
           s += `<tr><td style="color:#f59e42;padding:0">Pollen: </td><td style="padding:0"><b>${pollen[idx]}</b></td></tr>`;
+          s += `<tr><td style="color:#10b981;padding:0">Humidity: </td><td style="padding:0"><b>${humidity[idx]}</b></td></tr>`;
+          s += `<tr><td style="color:#ef4444;padding:0">Temperature: </td><td style="padding:0"><b>${temperature[idx]}</b></td></tr>`;
           s += '</table>';
           return s;
         }
@@ -117,6 +121,22 @@ export class ScorePage {
           type: "spline",
           data: pollen,
           color: '#f59e42',
+          visible: false,        // Hide line
+          showInLegend: false    // Hide from legend
+        },
+        {
+          name: 'Humidity',
+          type: "spline",
+          data: humidity,
+          color: '#10b981',
+          visible: false,        // Hide line
+          showInLegend: false    // Hide from legend
+        },
+        {
+          name: 'Temperature',
+          type: "spline",
+          data: temperature,
+          color: '#ef4444',
           visible: false,        // Hide line
           showInLegend: false    // Hide from legend
         }

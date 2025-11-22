@@ -59,6 +59,7 @@ export class SignupStep5Page implements OnInit {
             }).subscribe(
               (response) => {
                 // Store complete data and proceed
+                console.log('Storing signupData to localStorage:', this.signupService.signupData);
                 localStorage.setItem('signupData', JSON.stringify(this.signupService.signupData));
                 this.router.navigate(['/mycity']);
               },

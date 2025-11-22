@@ -5,7 +5,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img>
+    <!-- <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img> -->
     <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true" scroll-y="true" class="content-center ion-padding">
   <p class="title">Create Account</p>
   <p class="subtitle">Sign up to manage your allergies better</p>
-  <p class="subtitle allergic-nose">I think I have allergic nose</p>
+  <p class="subtitle allergic-nose">I think I have nose allergy</p>
 
   <div class="button-row">
     <ion-button
@@ -52,7 +52,7 @@
     <p class="subtitle left-bold">My Nose Problem(s) Is (Are) Causing</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="popover">
+      <ion-select #noseImpactSelect [value]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="popover" (ionChange)="onNoseImpactChange($event.detail.value); $event.stopPropagation()">
         <ion-select-option value="Sleep Disturbances">Sleep Disturbances</ion-select-option>
         <ion-select-option value="Affecting Work/School/Daily Activities">Affecting Work/School/Daily Activities</ion-select-option>
         <ion-select-option value="Troublesome">Troublesome</ion-select-option>

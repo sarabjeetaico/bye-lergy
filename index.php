@@ -110,13 +110,13 @@ function getallergynotification($data, $conn)
 
 function store_data_range($data, $conn)
     {
-        // print_r($data['signupData']['latitude']);exit;
+        print_r($data['signupData']['latitude']);exit;
         $data1 = [
             'lat' => $data['signupData']['latitude'],
             'lng' => $data['signupData']['longitude']
         ];
         $wheather_info = json_decode(weather_data($data1, $conn), true);
-        // print_r($wheather_info);exit;
+        print_r($wheather_info);exit;
         $json = [];
         $enddate = date("Y-m-d");
         $sql1 = "SELECT * FROM allergyn_rate WHERE deviceId = '".  $data['deviceId'] ."' and loc = '". $data['loc'] ."' and type = '". $data['type'] ."' and time_date LIKE '%". $enddate ."%'";
@@ -208,11 +208,11 @@ function weather_data($data, $conn)
 					
 					$response['data']['description'] = $curl_response['weather'][0]['description'];
 					$response['data']['icon'] = "https://openweathermap.org/img/wn/".$curl_response['weather'][0]['icon']."@2x.png";
-					$response['data']['temp'] = round($curl_response['main']['temp']-273.15)."°C";
+					$response['data']['temp'] = round($curl_response['main']['temp']-273.15)."째C";
 					$response['data']['humidity'] = $curl_response['main']['humidity']."%";
 					$response['data']['pressure'] = $curl_response['main']['pressure']."hPa";
 					$response['data']['wind_speed'] = round($curl_response['wind']['speed'])."m/s";
-					$response['data']['wind_deg'] = $curl_response['wind']['deg']."°";
+					$response['data']['wind_deg'] = $curl_response['wind']['deg']."째";
 					$response['data']['wind_gust'] = array_key_exists("gust",$curl_response['wind']) ? round($curl_response['wind']['gust'])."m/s" : 0;
 					$response['data']['sunrise'] = $curl_response['sys']['sunrise'];
 					$response['data']['sunset'] = $curl_response['sys']['sunset'];
@@ -441,6 +441,7 @@ function get_doctors($data, $conn)
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
+    print_r($data);exit;
     if (!isset($data['function']) || !function_exists($data['function'])) {
         echo json_encode(['error' => 'Invalid function']);
         exit;

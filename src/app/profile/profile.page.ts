@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { SignupService } from '../services/signup.service';
 
 @Component({
   standalone: true,
@@ -14,37 +15,61 @@ import { DataService } from '../services/data.service';
   imports: [CommonModule, FormsModule, IonicModule,FooterComponent],
 })
 export class ProfilePage implements OnInit {
-  signupData: any = {
-    name: '',
-    age: null,
-    dustSubtypes: [] as string[],
-    pollenSubtypes: [] as string[],
-    doctor: ''
-  };
+  signupData: any;
   notificationToggle = false;
   locationToggle = false;
   showContainer = false;
-  editMode = {
-    name: false,
-    age: false,
-    doctor: false,
-    dustSubtypes: false,
-    pollenSubtypes: false,
-    moldSubtypes: false
-  };
-  inputChanged = {
-    name: false,
-    age: false,
-    doctor: false,
-    dustSubtypes: false,
-    pollenSubtypes: false,
-    moldSubtypes: false
-  };
+  editMode: { [key: string]: boolean } = {};
+  inputChanged: { [key: string]: boolean } = {};
+
   dr_list:any;
-  dustOptions = ['Common household dust', 'Dust mites', 'Volcanic ash'];
-  pollenOptions = ['Grass', 'Trees', 'Weeds'];
-  moldOptions = ['Type1', 'Type2', 'Type3'];
-  constructor(private alertController: AlertController, private router: Router, private dataService: DataService) {}
+  dustOptions = [
+    'Dermatophagoides Pteronyssinus',
+    'Dermatophagoides Farinae',
+    'Blomia Tropicalis',
+    'Other'
+  ];
+
+  pollenOptions = [
+    'Grass',
+    'Weed',
+    'Tree',
+    'Other'
+  ];
+
+  moldOptions = [
+    'Aspergillus',
+    'Penicillium',
+    'Cladosporium',
+    'Other'
+  ];
+
+  noseSymptomOptions = ['Runny Nose', 'Itchy Eyes', 'Nose Block', 'Sneezing'];
+  noseFrequencyOptions = ['Less Than 4 Days In A Week', 'More Than 4 Days In A Week'];
+  noseImpactOptions = ['Sleep Disturbances', 'Affecting Work/School/Daily Activities', 'Troublesome', 'Nothing Above'];
+  medicationOptionsList = [
+    'Oral Antihistamines Tablet',
+    'Corticosteroids Nasal Spray',
+    'Corticosteroids Nasal Spray + Oral Antihistamine Tablet',
+    'Corticosteroids Nasal Spray + Antihistamine Nasal Spray',
+    'Others'
+  ];
+  satisfactionOptions = [
+    'I Am Satisfied With Medication',
+    'I Don\'t Need My Medications',
+    'I Need More Or Better Medications'
+  ];
+
+
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private dataService: DataService,
+    public signupService: SignupService
+  ) {
+    this.signupData = this.signupService.signupData;
+  }
+
   onSignup(){}
   onClose(){
       this.showContainer = (this.showContainer) ? false : true
@@ -64,37 +89,14 @@ export class ProfilePage implements OnInit {
     console.log("Dr List: ",this.dr_list)
     
     });
+
+    Object.keys(this.signupData).forEach(key => {
+      this.editMode[key] = false;
+      this.inputChanged[key] = false;
+    });
   }
-  onCheckboxChange(event: any) {
-    const value = event.target.value;
-    const isChecked = event.detail.checked;
 
-    const dustOptions = ['Common household dust', 'Dust mites', 'Volcanic ash'];
-    const pollenOptions = ['Grass', 'Trees', 'Weeds'];
-
-    if (dustOptions.includes(value)) {
-      this.updateSubtypeArray(this.signupData.dustSubtypes, value, isChecked);
-    }
-
-    if (pollenOptions.includes(value)) {
-      this.updateSubtypeArray(this.signupData.pollenSubtypes, value, isChecked);
-    }
-
-    // Update localStorage whenever a checkbox changes
-    localStorage.setItem('signupData', JSON.stringify(this.signupData));
-
-    console.log('Dust Subtypes:', this.signupData.dustSubtypes);
-    console.log('Pollen Subtypes:', this.signupData.pollenSubtypes);
-  }
-  updateSubtypeArray(array: string[], value: string, isChecked: boolean) {
-    const index = array.indexOf(value);
-    if (isChecked && index === -1) {
-      array.push(value);
-    } else if (!isChecked && index > -1) {
-      array.splice(index, 1);
-    }
-  }
-  onEditOrUpdate(field: 'name' | 'age' | 'doctor' | 'dustSubtypes' | 'pollenSubtypes' | 'moldSubtypes') {
+  onEditOrUpdate(field: string) {
     if (this.editMode[field] && this.inputChanged[field]) {
       // Update localStorage
       localStorage.setItem('signupData', JSON.stringify(this.signupData));
@@ -114,7 +116,7 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  onInputChange(field: 'name' | 'age' | 'doctor' | 'dustSubtypes' | 'pollenSubtypes' | 'moldSubtypes') {
+  onInputChange(field: string) {
     this.inputChanged[field] = true;
   }
 

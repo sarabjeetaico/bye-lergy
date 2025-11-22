@@ -132,21 +132,20 @@ signupData: any = {};
 
   }
 
-  search(event:any){
-    
-    this.searchText = event
-    if(this.searchText == null){
-      this.showList = false 
-    }else{
-
-      this.showList = true 
+  search(event: any) {
+    this.searchText = event;
+    if (this.searchText == null) {
+      this.showList = false;
+    } else {
+      this.showList = true;
     }
-  
-    console.log("searchText: ",this.searchText)
-    this.filtercities = this.cities.filter((item) => {
-      return item.city.toLowerCase().includes(this.searchText.toLowerCase());
-    });
-      // return city.city.toLowerCase().includes(this.searchText.toLowerCase());
+
+    console.log("searchText: ", this.searchText)
+    if (this.cities && this.cities.length > 0) {
+      this.filtercities = this.cities.filter((item) => {
+        return item.city.toLowerCase().includes(this.searchText.toLowerCase());
+      });
+    }
   }
 
   selectLoc(city:any){

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignupService } from '../services/signup.service';
+import { IonSelect } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup-step2',
@@ -9,6 +10,8 @@ import { SignupService } from '../services/signup.service';
   standalone: false
 })
 export class SignupStep2Page implements OnInit {
+  @ViewChild('noseImpactSelect') noseImpactSelect!: IonSelect;
+
   dustOptions = [
     'Dermatophagoides Pteronyssinus',
     'Dermatophagoides Farinae',
@@ -32,7 +35,7 @@ export class SignupStep2Page implements OnInit {
 
   suspectedAllergens: string[] = [];
 
-  constructor(private router: Router, public signupService: SignupService) {
+  constructor(private router: Router, public signupService: SignupService, private cdr: ChangeDetectorRef) {
     this.initSignupData();
   }
 
@@ -60,11 +63,12 @@ export class SignupStep2Page implements OnInit {
   onSuspectedChange(allergen: string, checked: boolean) {
     if (checked) {
       if (!this.signupService.signupData.suspectedAllergens.includes(allergen)) {
-        this.signupService.signupData.suspectedAllergens.push(allergen);
+        this.signupService.signupData.suspectedAllergens = [...this.signupService.signupData.suspectedAllergens, allergen];
       }
     } else {
       this.signupService.signupData.suspectedAllergens = this.signupService.signupData.suspectedAllergens.filter(a => a !== allergen);
     }
+    this.cdr.detectChanges();
   }
 
   isNextEnabled(): boolean {
@@ -99,11 +103,44 @@ export class SignupStep2Page implements OnInit {
       this.signupService.signupData.noseSymptoms = [];
       this.signupService.signupData.noseFrequency = '';
       this.signupService.signupData.noseImpact = [];
-      // Initialize suspectedAllergens as an empty array if it's undefined
-      if (!this.signupService.signupData.suspectedAllergens) {
-        this.signupService.signupData.suspectedAllergens = [];
-      }
+      this.signupService.signupData.suspectedAllergens = [];
     }
+  }
+
+  onNoseImpactChange(selectedValues: string[]) {
+    let updatedValues: string[] = [];
+
+    // If "Nothing Above" is selected
+    if (selectedValues.includes('Nothing Above')) {
+      // Keep only "Nothing Above"
+      updatedValues = ['Nothing Above'];
+    } 
+    // If other options are selected (and "Nothing Above" is not)
+    else if (selectedValues.length > 0) {
+      // Remove "Nothing Above" if it exists and keep the other selections
+      updatedValues = selectedValues.filter(item => item !== 'Nothing Above');
+    }
+    else {
+      updatedValues = selectedValues;
+    }
+
+    // Update the service data
+    this.signupService.signupData.noseImpact = updatedValues;
+    
+    // Update the select component value
+    if (this.noseImpactSelect) {
+      this.noseImpactSelect.value = updatedValues;
+    }
+    
+    this.cdr.detectChanges();
+  }
+
+  get isNothingAboveSelected(): boolean {
+    return this.signupService.signupData.noseImpact.includes('Nothing Above');
+  }
+
+  get isOtherOptionSelected(): boolean {
+    return this.signupService.signupData.noseImpact.some(item => item !== 'Nothing Above');
   }
 
   back() {

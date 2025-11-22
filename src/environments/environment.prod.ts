@@ -9,5 +9,5 @@ export const environment = {
   pollenURL: 'https://api.ambeedata.com/latest/pollen/by-lat-lng?',
   newApi : "https://api.ambeedata.com/latest/by-lat-lng?", 
   newApiKey : "12c8587eb130d5c95e5fae273eaef821a5b711ac5463a841086138405b9a4017",
-  googleMapsApiKey: "AIzaSyDHkCXE0t68ZiKdIPcXwe3YrHDibX_0MsI"
+  googleMapsApiKey: "AIzaSyDNkH5XShHTN2bjpK50qxsPbYwuKCPWS-A"
 };

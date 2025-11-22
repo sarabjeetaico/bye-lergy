@@ -1,6 +1,6 @@
 <ion-header [translucent]="true" class="custom-header">
   <ion-toolbar lines="none">
-    <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img>
+    <!-- <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img> -->
     <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
   </ion-toolbar>
 </ion-header>
@@ -25,7 +25,13 @@
     <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
     <ion-select [(ngModel)]="signupService.signupData.doctor" placeholder="Select Your Doctor" interface="popover">
       <ion-select-option *ngFor="let doctor of dr_list" [value]="doctor.id">{{ doctor.name }}</ion-select-option>
+      <ion-select-option value="other">Other</ion-select-option>
     </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="signupService.signupData.doctor == 'other'" class="custom-bg">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-input [(ngModel)]="signupService.signupData.other_doctor" placeholder="Enter your doctor's name" type="text" autocapitalize="words"></ion-input>
   </ion-item>
 
   <div class="center-button">
