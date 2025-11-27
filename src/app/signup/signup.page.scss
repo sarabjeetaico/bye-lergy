@@ -3,6 +3,14 @@ ion-header, ion-toolbar {
   --border-style: none !important;
   border: none !important;
   box-shadow: none !important;
+
+// Unify ion-select font size and color
+ion-select,
+ion-select::part(text),
+ion-select::part(placeholder) {
+  color: #454040 !important;
+  font-size: 14px !important;
+}
 }
 .glen_logo {
     width: 22%;
@@ -58,6 +66,14 @@ ion-header.custom-header {
     overflow: hidden; 
                  // in case contents overflow
   }
+}
+
+.native-doctor-input {
+  color: #454040;
+}
+
+.native-doctor-input::placeholder {
+  color: #a3a3a3;
 }
 ion-select {
   flex-grow: 1;

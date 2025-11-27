@@ -5,7 +5,6 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <!-- <ion-img slot="start" class="glen_logo" src="assets/images/Ryaltris LOGO-01.jpg"></ion-img> -->
     <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
   </ion-toolbar>
 </ion-header>
@@ -17,72 +16,94 @@
 
   <ion-item class="custom-bg" style="position: relative;">
     <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-    <ion-select [(ngModel)]="signupService.signupData.medicationOptions" multiple="true" placeholder="Select Treatment Option" interface="popover">
+    <ion-select [(ngModel)]="signupService.signupData.medicationOptions" multiple="true" interface="alert" placeholder="Select Treatment Option" (ionChange)="onMedicationChange()">
       <ion-select-option *ngFor="let option of treatmentOptions" [value]="option">{{ option }}</ion-select-option>
     </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="signupService.signupData.medicationOptions.includes('Others')" class="custom-bg">
+    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+    <ion-input [(ngModel)]="treatmentOther" placeholder="Please specify other medication"></ion-input>
+  </ion-item>
+
   <ion-item class="custom-bg" style="position: relative;">
     <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-    <ion-select [(ngModel)]="signupService.signupData.satisfaction" placeholder="About my medication(s), I think" interface="popover">
+    <ion-select [(ngModel)]="signupService.signupData.satisfaction" interface="alert" placeholder="About my medication(s)">
       <ion-select-option *ngFor="let option of satisfactionOptions" [value]="option">{{ option }}</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <ion-item lines="none" class="checkbox-item">
+  <ion-item class="custom-bg">
     <ion-checkbox
-      slot="start"
       [(ngModel)]="signupService.signupData.agreeTerms"
       name="agreeTerms"
       [disabled]="!isCheckboxEnabled()"
       (ionChange)="onTermsChange($event)">
     </ion-checkbox>
-    <div class="terms-text2">
-      By Checking This Box You Confirm That You Have Read And Agreed To Terms Of Services.
-    </div>
+    <ion-label class="ion-text-wrap" style="padding-left: 10px">By Checking This Box You Confirm That You Have Read And Agreed To Terms Of Services.</ion-label>
   </ion-item>
 
   <!-- Consent Modal -->
-<ion-modal [isOpen]="showConsentModal" cssClass="consent-modal" backdropDismiss="false">
-  <ng-template>
-    <div id="consentBox">
-      <div class="consent-box">
-        <button class="close-btn" (click)="closeConsentModal(false)">&times;</button>
-        <div class="consent-content">
-          <p style="color: black;">
-            By downloading and using the Bye-Lergy mobile application, I hereby acknowledge and provide my explicit consent to the collection and use of the following personal information:
-          </p>
-          <ul>
-            <li>My name and age (or age group)</li>
-            <li>Locality information (via GPS)</li>
-            <li>Doctor’s name (who recommended the app)</li>
-            <li>Type of allergy I am suffering from</li>
-          </ul>
-          <p style="color: black;">
-            This information will be utilized solely to deliver personalized health notifications, track my allergic rhinitis condition, and provide relevant recommendations aimed at enhancing my health outcomes. The Bye-Lergy app will offer personalized engagement by sending real-time notifications based on my location and allergy triggers.
-          </p>
-          <p style="color: black;">
-            I understand that:<br />
-            My data will not be shared with any third parties or stored with Glenmark or any other external entities.<br />
-            I have the right to access, modify, or delete my personal data at any time within the app.<br />
-            I retain the option to withdraw my consent at any point, without affecting my use of the app.
-          </p>
-          <ion-item lines="none" class="checkbox-item">
-            <ion-checkbox [(ngModel)]="signupService.signupData.agreeTerms" name="agreeTerms" color="primary">
-            </ion-checkbox>
-            <div class="terms-text2">
-              I confirm that I have read and understood this consent form, and I voluntarily agree to the collection and use of my data as outlined above.
+  <ion-modal [isOpen]="showConsentModal" cssClass="consent-modal" backdropDismiss="false">
+    <ng-template>
+      <div id="consentBox">
+        <div class="consent-box">
+          <button class="close-btn" (click)="closeConsentModal(false)">&times;</button>
+          <div class="consent-content">
+            <p style="color: black; font-weight:600;">By completing sign-up on the Bye-Lergy app, I give my clear and voluntary consent for the app to collect and use the information I provide, including my name, age, city/locality/GPS location, doctor’s name, type of allergy/symptoms, medication details and symptom tracking entries.</p>
+
+            <h3 style="color: black; margin-top: 12px;">How my data will be used</h3>
+            <p style="color: black;">My information will be used to:</p>
+            <ul>
+              <li>Send personalized allergy and health notifications</li>
+              <li>Provide location-based AQI &amp; pollen alerts</li>
+              <li>Help me track symptoms, scores and weekly progress</li>
+              <li>Improve the app and its features</li>
+              <li>Conduct research and publications related to allergic rhinitis, triggers, symptom patterns and responses to medication in participating countries such as Malaysia and the Philippines</li>
+            </ul>
+
+            <h3 style="color: black; margin-top: 12px;">Data sharing for research</h3>
+            <ul>
+              <li>For research and publication purposes, my data will be anonymized or pseudonymized and may be accessed only by authorized personnel. Only personnel with a legitimate study purpose will have access to identifiable or pseudonymized data.</li>
+              <li>My identity will not be revealed in any report or publication. Reports will use aggregate statistics or fully de-identified information only.</li>
+            </ul>
+
+            <h3 style="color: black; margin-top: 12px;">Voluntary participation and my rights</h3>
+            <ul>
+              <li>Participation in research is entirely voluntary.</li>
+              <li>I may choose not to take part or withdraw at any time, without penalty or loss of medical services. Refusal or withdrawal will not affect the care or services I receive from the doctor I am consulting.</li>
+              <li>There is no direct benefit to me, but my participation may help improve future research and healthcare delivery for allergic rhinitis.</li>
+              <li>There is no cost to me and I will not receive any payment or reimbursement for taking part in the study.</li>
+              <li>My responses are kept strictly confidential, and my data will be anonymized and stored securely.</li>
+              <li>I can view, edit or delete my data in the app, and I may withdraw my consent for research at any time.</li>
+              <li>Withdrawal will stop future use of my data, but may not be possible for analyses or publications that have already been completed.</li>
+            </ul>
+
+            <h3 style="color: black; margin-top: 12px;">Security and confidentiality</h3>
+            <ul>
+              <li>My data will be stored on secure servers with industry-standard safety measures.</li>
+              <li>Every reasonable step will be taken to protect my privacy and prevent re-identification.</li>
+            </ul>
+
+            <!-- <h3 style="color: black; margin-top: 12px;">Confirmation</h3>
+            <p style="color: black;">By tapping “I Agree”, I confirm that:<br />I have read and understood this consent and I voluntarily allow the app to collect and use my information as described above, including the possibility of secure, anonymized or pseudonymized use in research and publications.</p> -->
+
+            <ion-item class="custom-bg">
+              <ion-checkbox [(ngModel)]="signupService.signupData.agreeTerms" name="agreeTerms" color="primary"></ion-checkbox>
+              <ion-label class="ion-text-wrap" style="padding-left: 10px">
+               By tapping “I Agree”, I confirm that:<br />I have read and understood this consent and I voluntarily allow the app to collect and use my information as described above, including the possibility of secure, anonymized or pseudonymized use in research and publications.
+              </ion-label>
+            </ion-item>
+
+            <div class="center-button">
+              <ion-button color="primary" (click)="closeConsentModal(true)">I Agree</ion-button>
+              <ion-button color="medium" (click)="closeConsentModal(false)">Cancel</ion-button>
             </div>
-          </ion-item>
-          <div class="center-button">
-            <ion-button color="primary" (click)="closeConsentModal(true)">I Agree</ion-button>
-            <ion-button color="medium" (click)="closeConsentModal(false)">Cancel</ion-button>
           </div>
         </div>
       </div>
-    </div>
-  </ng-template>
-</ion-modal>
+    </ng-template>
+  </ion-modal>
 
   <div class="center-button">
     <ion-button class="custom-btn" (click)="onSignup()" [disabled]="!isSignUpEnabled()">

@@ -85,7 +85,7 @@ selectedCity: string = ''; // <-- Add this line
       this.col2Color = this.aqiDetails['col2Color'];
       this.polen_value = this.aqiDetails['pollen_value'];
       this.icon = this.aqiDetails['icon'];
-      this.temp = this.aqiDetails['temp'];
+      this.temp = this.normalizeTemperatureString(this.aqiDetails['temp']);
       this.humidity = this.aqiDetails['humidity'];
       this.wind_deg = this.aqiDetails['wind_deg'];
       this.searchText = this.signupData['city'];
@@ -117,6 +117,24 @@ selectedCity: string = ''; // <-- Add this line
       this.dismiss();
       console.log("this.first_recomm: ", this.first_recomm);
     });
+  }
+
+  // Normalize a single temperature value to a clean display string like "25°C".
+  normalizeTemperatureString(t: any): string {
+    if (t === null || t === undefined) return '';
+    let s = String(t);
+    // Decode any literal "\\uXXXX" sequences present in the string
+    s = s.replace(/\\u([0-9a-fA-F]{4})/g, (_m, hex) => {
+      try { return String.fromCharCode(parseInt(hex, 16)); } catch (e) { return ''; }
+    });
+    // Extract numeric portion (integer or decimal)
+    const m = s.match(/[-+]?\d+(?:\.\d+)?/);
+    if (m) {
+      return `${m[0]}°C`;
+    }
+    // Fallback: remove non-ascii characters and append °C if anything remains
+    const cleaned = s.replace(/[^\u0000-\u007F]+/g, '').trim();
+    return cleaned ? `${cleaned}°C` : '';
   }
 
   get_recomendation(reco_level: any) {

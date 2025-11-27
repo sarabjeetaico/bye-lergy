@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SignupStep4Page implements OnInit {
   treatmentOptions = [
-    'Oral Antihistamines Tablet',
+    'Oral Antihistamine Tablet',
     'Corticosteroids Nasal Spray',
     'Corticosteroids Nasal Spray + Oral Antihistamine Tablet',
     'Corticosteroids Nasal Spray + Antihistamine Nasal Spray',
@@ -34,6 +34,8 @@ export class SignupStep4Page implements OnInit {
     'I Need More Or Better Medications'
   ];
 
+  treatmentOther: string = '';
+
   constructor(
     private router: Router,
     public signupService: SignupService,
@@ -43,8 +45,18 @@ export class SignupStep4Page implements OnInit {
 
   ngOnInit() {}
 
+  onMedicationChange() {
+    if (!this.signupService.signupData.medicationOptions.includes('Others')) {
+      this.treatmentOther = '';
+    }
+  }
+
   isSignUpEnabled(): boolean {
-    return this.signupService.signupData.medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '' && this.signupService.signupData.agreeTerms;
+    const medicationOptions = this.signupService.signupData.medicationOptions;
+    const isOtherSelected = medicationOptions.includes('Others');
+    const isOtherValid = isOtherSelected ? this.treatmentOther.trim().length > 0 : true;
+
+    return medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '' && this.signupService.signupData.agreeTerms && isOtherValid;
   }
 
   isCheckboxEnabled(): boolean {

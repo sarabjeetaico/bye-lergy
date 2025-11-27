@@ -31,24 +31,20 @@
   <div *ngIf="signupService.signupData.testedForAllergens === false">
     <p class="subtitle">I think I am allergic to:</p>
     <ion-item class="custom-bg">
-      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)"></ion-checkbox>
-      <ion-label>Dust Mites</ion-label>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Dust Mites')" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)"></ion-checkbox>
-      <ion-label>Pollens</ion-label>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Pollens')" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)"></ion-checkbox>
-      <ion-label>Mold</ion-label>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Mold')" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Other')" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
+    </ion-item>
+    <ion-item *ngIf="signupService.signupData.suspectedAllergens.includes('Other')" class="custom-bg">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-checkbox slot="start" (ionChange)="onSuspectedChange('Other', $event.detail.checked)"></ion-checkbox>
-      <ion-label>Other</ion-label>
+      <ion-input [(ngModel)]="suspectedOther" placeholder="Please specify other allergy"></ion-input>
     </ion-item>
   </div>
 
@@ -56,27 +52,36 @@
     <p class="subtitle">I am allergic to:</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.dustSubtypes" multiple="true" placeholder="Select Dust Mites" interface="popover">
+<ion-select [(ngModel)]="signupService.signupData.dustSubtypes" multiple="true" placeholder="Select Dust Mites" interface="alert">
         <ion-select-option value="Dermatophagoides Pteronyssinus">Dermatophagoides Pteronyssinus</ion-select-option>
         <ion-select-option value="Dermatophagoides Farinae">Dermatophagoides Farinae</ion-select-option>
         <ion-select-option value="Blomia Tropicalis">Blomia Tropicalis</ion-select-option>
         <ion-select-option value="Other">Other</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-item *ngIf="signupService.signupData.dustSubtypes.includes('Other')" class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-input [(ngModel)]="dustOther" placeholder="Please specify other dust mite"></ion-input>
+    </ion-item>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Types" interface="popover">
-        <ion-select-option value="Pollen">Pollen</ion-select-option>
+<ion-select [(ngModel)]="signupService.signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Types" interface="alert">
+        <ion-select-option value="Yes">Yes</ion-select-option>
+        <ion-select-option value="No">No</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.moldSubtypes" multiple="true" placeholder="Select Mold Types" interface="popover">
+<ion-select [(ngModel)]="signupService.signupData.moldSubtypes" multiple="true" placeholder="Select Mold Types" interface="alert">
         <ion-select-option value="Aspergillus">Aspergillus</ion-select-option>
         <ion-select-option value="Penicillium">Penicillium</ion-select-option>
         <ion-select-option value="Cladosporium">Cladosporium</ion-select-option>
         <ion-select-option value="Other">Other</ion-select-option>
       </ion-select>
+    </ion-item>
+    <ion-item *ngIf="signupService.signupData.moldSubtypes.includes('Other')" class="custom-bg">
+      <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
+      <ion-input [(ngModel)]="moldOther" placeholder="Please specify other mold"></ion-input>
     </ion-item>
   </div>
 

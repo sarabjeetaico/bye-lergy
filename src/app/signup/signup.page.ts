@@ -1,7 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
-import { DataService } from '../services/data.service';
 import { SignupService } from '../services/signup.service';
 
 @Component({
@@ -11,12 +11,9 @@ import { SignupService } from '../services/signup.service';
   standalone: false
 })
 export class SignupPage implements OnInit {
-  dr_list: any;
-
   constructor(
     private router: Router, 
     private ngZone: NgZone, 
-    public dataService: DataService, 
     public signupService: SignupService
   ) {}
 
@@ -29,6 +26,7 @@ export class SignupPage implements OnInit {
     }
   }
 
+
   ngOnInit() {
     const safeTop = getComputedStyle(document.documentElement)
       .getPropertyValue('--ion-safe-area-top');
@@ -36,18 +34,10 @@ export class SignupPage implements OnInit {
       'style',
       `padding-top: ${safeTop};`
     );
-
-    this.dataService.getDr().subscribe(res => {
-      this.dr_list = res;
-      console.log("Dr List: ", this.dr_list);
-    });
   }
 
   isNextEnabled(): boolean {
     const data = this.signupService.signupData;
-    if (data.doctor === 'other') {
-      return !!(data.name && data.age && data.doctor && data.other_doctor);
-    }
     return !!(data.name && data.age && data.doctor);
   }
 

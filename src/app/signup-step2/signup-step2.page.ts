@@ -34,6 +34,7 @@ export class SignupStep2Page implements OnInit {
   ];
 
   suspectedAllergens: string[] = [];
+  suspectedOther: string = '';
 
   constructor(private router: Router, public signupService: SignupService, private cdr: ChangeDetectorRef) {
     this.initSignupData();
@@ -46,6 +47,12 @@ export class SignupStep2Page implements OnInit {
     if (!this.signupService.signupData || Object.keys(this.signupService.signupData).length === 0) {
       this.signupService.resetData();
     }
+    // Ensure expected array/string fields exist to avoid template errors
+    const d: any = this.signupService.signupData;
+    if (!d.noseImpact) { d.noseImpact = []; }
+    if (!d.noseSymptoms) { d.noseSymptoms = []; }
+    if (!d.noseFrequency) { d.noseFrequency = ''; }
+    if (!d.suspectedAllergens) { d.suspectedAllergens = []; }
   }
 
   onTestedChange(value: any) {
@@ -62,11 +69,22 @@ export class SignupStep2Page implements OnInit {
 
   onSuspectedChange(allergen: string, checked: boolean) {
     if (checked) {
-      if (!this.signupService.signupData.suspectedAllergens.includes(allergen)) {
-        this.signupService.signupData.suspectedAllergens = [...this.signupService.signupData.suspectedAllergens, allergen];
+      if (allergen === 'Nothing Above') {
+        // If "Nothing Above" is selected, clear all other selections
+        this.signupService.signupData.suspectedAllergens = ['Nothing Above'];
+        this.suspectedOther = '';
+      } else {
+        // If another option is selected, remove "Nothing Above" if present
+        this.signupService.signupData.suspectedAllergens = this.signupService.signupData.suspectedAllergens.filter(a => a !== 'Nothing Above');
+        if (!this.signupService.signupData.suspectedAllergens.includes(allergen)) {
+          this.signupService.signupData.suspectedAllergens = [...this.signupService.signupData.suspectedAllergens, allergen];
+        }
       }
     } else {
       this.signupService.signupData.suspectedAllergens = this.signupService.signupData.suspectedAllergens.filter(a => a !== allergen);
+      if (allergen === 'Other') {
+        this.suspectedOther = '';
+      }
     }
     this.cdr.detectChanges();
   }
@@ -80,7 +98,10 @@ export class SignupStep2Page implements OnInit {
              this.signupService.signupData.noseImpact.length > 0;
     } else if (this.signupService.signupData.allergicNose === false) {
       // "No" selected: require at least one suspected allergen checked
-      return this.signupService.signupData.suspectedAllergens.length > 0;
+      const suspects = this.signupService.signupData.suspectedAllergens;
+      const isOtherSelected = suspects.includes('Other');
+      const isOtherValid = isOtherSelected ? this.suspectedOther.trim().length > 0 : true;
+      return suspects.length > 0 && isOtherValid;
     }
     // Disable by default if not chosen
     return false;
@@ -98,6 +119,7 @@ export class SignupStep2Page implements OnInit {
     if (value === true) {
       // Reset No fields
       this.signupService.signupData.suspectedAllergens = [];
+      this.suspectedOther = '';
     } else {
       // Reset Yes fields
       this.signupService.signupData.noseSymptoms = [];
@@ -107,40 +129,40 @@ export class SignupStep2Page implements OnInit {
     }
   }
 
-  onNoseImpactChange(selectedValues: string[]) {
+  onNoseImpactChange(selectedValues: string[] | null | undefined) {
     let updatedValues: string[] = [];
 
-    // If "Nothing Above" is selected
-    if (selectedValues.includes('Nothing Above')) {
-      // Keep only "Nothing Above"
-      updatedValues = ['Nothing Above'];
-    } 
-    // If other options are selected (and "Nothing Above" is not)
-    else if (selectedValues.length > 0) {
-      // Remove "Nothing Above" if it exists and keep the other selections
-      updatedValues = selectedValues.filter(item => item !== 'Nothing Above');
-    }
-    else {
-      updatedValues = selectedValues;
+    if (Array.isArray(selectedValues)) {
+      // If "Nothing Above" is selected, it should be the only value.
+      if (selectedValues.includes('Nothing Above')) {
+        updatedValues = ['Nothing Above'];
+      } else {
+        updatedValues = selectedValues;
+      }
     }
 
-    // Update the service data
     this.signupService.signupData.noseImpact = updatedValues;
-    
-    // Update the select component value
-    if (this.noseImpactSelect) {
-      this.noseImpactSelect.value = updatedValues;
-    }
-    
     this.cdr.detectChanges();
   }
 
   get isNothingAboveSelected(): boolean {
-    return this.signupService.signupData.noseImpact.includes('Nothing Above');
+    const arr = this.signupService.signupData.noseImpact || [];
+    return arr.includes('Nothing Above');
   }
 
   get isOtherOptionSelected(): boolean {
-    return this.signupService.signupData.noseImpact.some(item => item !== 'Nothing Above');
+    const arr = this.signupService.signupData.noseImpact || [];
+    return arr.some(item => item !== 'Nothing Above');
+  }
+
+  get isSuspectedNothingAboveSelected(): boolean {
+    const arr = this.signupService.signupData.suspectedAllergens || [];
+    return arr.includes('Nothing Above');
+  }
+
+  get isSuspectedOtherSelected(): boolean {
+    const arr = this.signupService.signupData.suspectedAllergens || [];
+    return arr.some(item => item !== 'Nothing Above');
   }
 
   back() {

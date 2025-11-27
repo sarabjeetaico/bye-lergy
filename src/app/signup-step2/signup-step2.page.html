@@ -32,7 +32,7 @@
     <p class="subtitle left-bold">I Have These Symptoms</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.noseSymptoms" multiple="true" placeholder="Select Symptoms" interface="popover">
+<ion-select [(ngModel)]="signupService.signupData.noseSymptoms" multiple="true" placeholder="Select Symptoms" interface="alert">
         <ion-select-option value="Runny Nose">Runny Nose</ion-select-option>
         <ion-select-option value="Itchy Eyes">Itchy Eyes</ion-select-option>
         <ion-select-option value="Nose Block">Nose Block</ion-select-option>
@@ -43,7 +43,7 @@
     <p class="subtitle left-bold">My Nose Problem(s) Happens</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select [(ngModel)]="signupService.signupData.noseFrequency" placeholder="Select Frequency" interface="popover">
+<ion-select [(ngModel)]="signupService.signupData.noseFrequency" placeholder="Select Frequency" interface="alert">
         <ion-select-option value="Less Than 4 Days In A Week">Less Than 4 Days In A Week</ion-select-option>
         <ion-select-option value="More Than 4 Days In A Week">More Than 4 Days In A Week</ion-select-option>
       </ion-select>
@@ -52,11 +52,11 @@
     <p class="subtitle left-bold">My Nose Problem(s) Is (Are) Causing</p>
     <ion-item class="custom-bg" style="position: relative;">
       <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-      <ion-select #noseImpactSelect [value]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="popover" (ionChange)="onNoseImpactChange($event.detail.value); $event.stopPropagation()">
-        <ion-select-option value="Sleep Disturbances">Sleep Disturbances</ion-select-option>
-        <ion-select-option value="Affecting Work/School/Daily Activities">Affecting Work/School/Daily Activities</ion-select-option>
-        <ion-select-option value="Troublesome">Troublesome</ion-select-option>
-        <ion-select-option value="Nothing Above">Nothing Above</ion-select-option>
+<ion-select #noseImpactSelect [(ngModel)]="signupService.signupData.noseImpact" multiple="true" placeholder="Select Impact" interface="action-sheet" (ionChange)="onNoseImpactChange($event.detail.value)">
+        <ion-select-option value="Sleep Disturbances" [disabled]="isNothingAboveSelected">Sleep Disturbances</ion-select-option>
+        <ion-select-option value="Affecting Work/School/Daily Activities" [disabled]="isNothingAboveSelected">Affecting Work/school/Daily Activities</ion-select-option>
+        <ion-select-option value="Troublesome" [disabled]="isNothingAboveSelected">Troublesome</ion-select-option>
+        <ion-select-option value="Nothing Above" [disabled]="isOtherOptionSelected">Nothing Above</ion-select-option>
       </ion-select>
     </ion-item>
   </div>
@@ -64,16 +64,22 @@
   <div *ngIf="signupService.signupData.allergicNose === false">
     <p class="subtitle">I think I am allergic to:</p>
     <ion-item class="custom-bg">
-      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Dust Mites')" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Dust Mites')" [disabled]="isSuspectedNothingAboveSelected" (ionChange)="onSuspectedChange('Dust Mites', $event.detail.checked)">Dust Mites</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Pollens')" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Pollens')" [disabled]="isSuspectedNothingAboveSelected" (ionChange)="onSuspectedChange('Pollens', $event.detail.checked)">Pollens</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Mold')" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Mold')" [disabled]="isSuspectedNothingAboveSelected" (ionChange)="onSuspectedChange('Mold', $event.detail.checked)">Mold</ion-checkbox>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Other')" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Other')" [disabled]="isSuspectedNothingAboveSelected" (ionChange)="onSuspectedChange('Other', $event.detail.checked)">Other</ion-checkbox>
+    </ion-item>
+    <ion-item class="custom-bg">
+      <ion-checkbox [checked]="signupService.signupData.suspectedAllergens.includes('Nothing Above')" [disabled]="isSuspectedOtherSelected" (ionChange)="onSuspectedChange('Nothing Above', $event.detail.checked)">Nothing Above</ion-checkbox>
+    </ion-item>
+    <ion-item *ngIf="signupService.signupData.suspectedAllergens.includes('Other')" class="custom-bg">
+      <ion-input [(ngModel)]="suspectedOther" placeholder="Please specify other allergy"></ion-input>
     </ion-item>
   </div>
 

@@ -46,6 +46,11 @@ export class ScorePage {
     this.dataService.get_grap_data(selectedRange).subscribe((res) => { 
       this.isLoading = false; // Hide loader first
       setTimeout(() => {      // Wait for DOM to update
+        // Normalize temperature values so any escaped unicode or unexpected characters
+        // are converted to a readable format like "25°C" for display, and also extract
+        // numeric values for plotting.
+        const tempDisplay = this.normalizeTemperatures(res['temperature']);
+        const tempNumbers = this.extractTemperatureNumbers(res['temperature']);
         this.plotSimpleBarChart(
           res["day"],
           res["occcular"],
@@ -53,7 +58,8 @@ export class ScorePage {
           res['aqi'],
           res['pollen'],
           res['humidity'],
-          res['temperature'],
+          tempNumbers,
+          tempDisplay,
           res['date_range']
         );
       }, 0);
@@ -62,7 +68,40 @@ export class ScorePage {
     });
   }
 
-  plotSimpleBarChart(days: any, o: any, n: any, aqi: any, pollen: any, humidity: any, temperature: any, date_range: any) {
+  // Convert temperature array entries to a clean display string like "25°C".
+  normalizeTemperatures(temperature: any): string[] {
+    if (!Array.isArray(temperature)) return [];
+    return temperature.map((t: any) => {
+      if (t === null || t === undefined) return '';
+      let s = String(t);
+      // Decode any literal "\uXXXX" sequences present in the string
+      s = s.replace(/\\u([0-9a-fA-F]{4})/g, (_m, hex) => {
+        try { return String.fromCharCode(parseInt(hex, 16)); } catch (e) { return ''; }
+      });
+      // Extract numeric portion (integer or decimal)
+      const m = s.match(/[-+]?\d+(?:\.\d+)?/);
+      if (m) {
+        // Use degree symbol and Celsius
+        return `${m[0]}°C`;
+      }
+      // Fallback: replace any non-printable/strange chars and append °C
+        const cleaned = s.replace(/[^\u0000-\u007F]+/g, '').trim();
+      return cleaned ? `${cleaned}°C` : '';
+    });
+  }
+
+  // Extract numeric temperature values (as numbers) from various representations.
+  extractTemperatureNumbers(temperature: any): number[] {
+    if (!Array.isArray(temperature)) return [];
+    return temperature.map((t: any) => {
+      if (t === null || t === undefined) return NaN;
+      const s = String(t).replace(/\\u[0-9a-fA-F]{4}/g, '');
+      const m = s.match(/[-+]?\d+(?:\.\d+)?/);
+      return m ? parseFloat(m[0]) : NaN;
+    });
+  }
+
+  plotSimpleBarChart(days: any, o: any, n: any, aqi: any, pollen: any, humidity: any, temperatureNumbers: any, temperatureDisplay: any, date_range: any) {
     HighCharts.chart('highcharts', {
       chart: { type: 'spline' },
       title: { text: this.displayDateRange },
@@ -90,7 +129,7 @@ export class ScorePage {
           s += `<tr><td style="color:#3b82f6;padding:0">AQI: </td><td style="padding:0"><b>${aqi[idx]}</b></td></tr>`;
           s += `<tr><td style="color:#f59e42;padding:0">Pollen: </td><td style="padding:0"><b>${pollen[idx]}</b></td></tr>`;
           s += `<tr><td style="color:#10b981;padding:0">Humidity: </td><td style="padding:0"><b>${humidity[idx]}</b></td></tr>`;
-          s += `<tr><td style="color:#ef4444;padding:0">Temperature: </td><td style="padding:0"><b>${temperature[idx]}</b></td></tr>`;
+          s += `<tr><td style="color:#ef4444;padding:0">Temperature: </td><td style="padding:0"><b>${temperatureDisplay[idx]}</b></td></tr>`;
           s += '</table>';
           return s;
         }
@@ -135,7 +174,7 @@ export class ScorePage {
         {
           name: 'Temperature',
           type: "spline",
-          data: temperature,
+          data: temperatureNumbers,
           color: '#ef4444',
           visible: false,        // Hide line
           showInLegend: false    // Hide from legend

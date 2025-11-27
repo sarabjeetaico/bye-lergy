@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select Impact</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-checkbox [checked]="selectedImpacts.includes('Sleep Disturbances')"
+                    [disabled]="isNothingAboveSelected()"
+                    (ionChange)="onImpactChange('Sleep Disturbances', $event.detail.checked)">Sleep Disturbances</ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox [checked]="selectedImpacts.includes('Affecting Work/School/Daily Activities')"
+                    [disabled]="isNothingAboveSelected()"
+                    (ionChange)="onImpactChange('Affecting Work/School/Daily Activities', $event.detail.checked)">Affecting Work/school/Daily Activities</ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox [checked]="selectedImpacts.includes('Troublesome')"
+                    [disabled]="isNothingAboveSelected()"
+                    (ionChange)="onImpactChange('Troublesome', $event.detail.checked)">Troublesome</ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox [checked]="selectedImpacts.includes('Nothing Above')"
+                    [disabled]="isOtherOptionSelected()"
+                    (ionChange)="onImpactChange('Nothing Above', $event.detail.checked)">Nothing Above</ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="confirmChanges()">Confirm</ion-button>
+  </ion-toolbar>
+</ion-footer>

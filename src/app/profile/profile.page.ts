@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit {
   inputChanged: { [key: string]: boolean } = {};
 
   dr_list:any;
+  doctorInput: string = '';
   dustOptions = [
     'Dermatophagoides Pteronyssinus',
     'Dermatophagoides Farinae',
@@ -31,10 +32,8 @@ export class ProfilePage implements OnInit {
   ];
 
   pollenOptions = [
-    'Grass',
-    'Weed',
-    'Tree',
-    'Other'
+    'Yes',
+    'No'
   ];
 
   moldOptions = [
@@ -83,12 +82,37 @@ export class ProfilePage implements OnInit {
       this.signupData = JSON.parse(data);
       console.log("signupData: ",this.signupData)
     }
+    // initialize doctorInput display value from signupData once dr_list is available
     this.dataService.getDr().subscribe(res => {
       this.dr_list = res;
-    
-    console.log("Dr List: ",this.dr_list)
-    
+      try {
+        const docId = this.signupData?.doctor;
+        if (docId && this.dr_list && Array.isArray(this.dr_list)) {
+          const found = this.dr_list.find((d: any) => d.id === docId);
+          if (found) {
+            this.doctorInput = found.name;
+          } else if (docId === 'other') {
+            this.doctorInput = 'Other';
+          } else if (typeof docId === 'string') {
+            this.doctorInput = docId;
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
     });
+
+
+  
+    // Load simple preferences (if any) from localStorage
+    try {
+      const notif = localStorage.getItem('notificationToggle');
+      if (notif !== null) this.notificationToggle = JSON.parse(notif);
+      const loc = localStorage.getItem('locationToggle');
+      if (loc !== null) this.locationToggle = JSON.parse(loc);
+    } catch (e) {
+      console.warn('Failed to load preferences from localStorage', e);
+    }
 
     Object.keys(this.signupData).forEach(key => {
       this.editMode[key] = false;
@@ -118,6 +142,58 @@ export class ProfilePage implements OnInit {
 
   onInputChange(field: string) {
     this.inputChanged[field] = true;
+    try {
+      // Persist immediately to localStorage so UI changes are reflected across reloads
+      localStorage.setItem('signupData', JSON.stringify(this.signupData));
+    } catch (e) {
+      console.error('Failed to write signupData to localStorage', e);
+    }
+    // Also attempt background update to backend so server state stays in sync
+    this.dataService.updateProfile(this.signupData).subscribe({
+      next: () => {
+        // no-op
+      },
+      error: (err) => {
+        console.warn('Background profile update failed', err);
+      }
+    });
+  }
+
+  // Save simple UI preferences (not part of signupData) to localStorage
+  onPrefChange(prefName: string) {
+    try {
+      const val = (this as any)[prefName];
+      localStorage.setItem(prefName, JSON.stringify(val));
+    } catch (e) {
+      console.error('Failed to persist preference', prefName, e);
+    }
+  }
+
+  // Handle manual doctor input: store id when matched, or store 'other' or typed name
+  onDoctorInput(value: string) {
+    const v = value || '';
+    this.doctorInput = v;
+    if (!this.signupData) return;
+    if (v === 'Other') {
+      this.signupData.doctor = 'other';
+      // persist change
+      this.onInputChange('doctor');
+      return;
+    }
+
+    if (this.dr_list && Array.isArray(this.dr_list)) {
+      const found = this.dr_list.find((d: any) => d.name === v);
+      if (found) {
+        // store id internally but keep display as name
+        this.signupData.doctor = found.id;
+        this.onInputChange('doctor');
+        return;
+      }
+    }
+
+    // If not found in list, store the typed value as the doctor's name
+    this.signupData.doctor = v;
+    this.onInputChange('doctor');
   }
 
   async onDeleteAccount() {

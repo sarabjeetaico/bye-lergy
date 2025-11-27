@@ -4,6 +4,14 @@ ion-header, ion-toolbar {
   border: none !important;
   box-shadow: none !important;
 }
+
+// Unify ion-select font size and color
+ion-select,
+ion-select::part(text),
+ion-select::part(placeholder) {
+  color: #454040 !important;
+  font-size: 14px !important;
+}
 .glen_logo {
     width: 22%;
 }
@@ -141,4 +149,29 @@ ion-content.content-center {
   .title, .subtitle {
     color: #fff;
   }
+}
+
+/* Custom styles to prevent text truncation in ion-select popover options */
+::ng-deep ion-popover .popover-content {
+  max-width: 400px !important; /* wider popover */
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+::ng-deep ion-select-popover .select-interface-option {
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  max-width: 380px !important;
+  text-overflow: unset !important;
+}
+
+/* Adjust text inside select options */
+::ng-deep ion-select-popover .select-interface-option .select-text {
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  text-overflow: unset !important;
+}
+ion-checkbox {
+    font-weight: 600;
+    color: gray;
 }

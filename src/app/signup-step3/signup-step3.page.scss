@@ -102,6 +102,26 @@ ion-content.content-center {
   background: #963E75 !important;
 }
 
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.button-row ion-button {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  text-transform: none;
+  width: 100px;
+}
+
+ion-checkbox {
+    font-weight: 600;
+    color: gray;
+}
+
 @media (prefers-color-scheme: dark) {
   ion-content.content-center {
     background: #2d1430 !important;

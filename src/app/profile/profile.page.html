@@ -1,6 +1,5 @@
 <ion-header [translucent]="true" class="custom-header">
   <ion-toolbar lines="none">
-    <ion-img slot="end" class="glen_logo" src="assets/images/glenmark-logo.png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -11,38 +10,60 @@
 
   <!-- Basic Info -->
   <ion-item class="custom-bg">
-    <ion-input [(ngModel)]="signupData.name" [readonly]="!editMode['name']"></ion-input>
+    <ion-label position="fixed">Name</ion-label>
+    <ion-input [(ngModel)]="signupData.name" (ionInput)="onInputChange('name')" [readonly]="!editMode['name']"></ion-input>
     <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('name')">
       <ion-icon [name]="editMode['name'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
     </ion-button>
   </ion-item>
   <ion-item class="custom-bg">
-    <ion-input [(ngModel)]="signupData.age" type="number" [readonly]="!editMode['age']"></ion-input>
+    <ion-label position="fixed">Age</ion-label>
+    <ion-input [(ngModel)]="signupData.age" (ionInput)="onInputChange('age')" type="number" [readonly]="!editMode['age']"></ion-input>
     <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('age')">
       <ion-icon [name]="editMode['age'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
     </ion-button>
   </ion-item>
   <ion-item class="custom-bg">
-    <ion-select [(ngModel)]="signupData.doctor" [disabled]="!editMode['doctor']">
-      <ion-select-option *ngFor="let doctor of dr_list" [value]="doctor.id">{{ doctor.name }}</ion-select-option>
-    </ion-select>
+    <ion-label position="fixed">Doctor</ion-label>
+    <div style="position: relative; width: 100%">
+      <input
+        class="native-input native-doctor-input"
+        list="profile-doctor-list"
+        [ngModel]="doctorInput"
+        (ngModelChange)="onDoctorInput($event)"
+        [readonly]="!editMode['doctor']"
+        placeholder="Select or type your doctor"
+        autocapitalize="words"
+        style="width:100%; border:none; background:transparent; outline:none; font-size:16px;"
+      />
+      <datalist id="profile-doctor-list">
+        <option *ngFor="let doctor of dr_list" [value]="doctor.name"></option>
+        <option value="Other">Other</option>
+      </datalist>
+    </div>
     <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('doctor')">
       <ion-icon [name]="editMode['doctor'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item *ngIf="signupData.doctor == 'other'" class="custom-bg">
+    <ion-label position="fixed">Other Doctor's Name</ion-label>
+    <ion-input [(ngModel)]="signupData.other_doctor" (ionInput)="onInputChange('other_doctor')" autocapitalize="words"></ion-input>
+    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('other_doctor')">
+      <ion-icon [name]="editMode['other_doctor'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
     </ion-button>
   </ion-item>
 
   <!-- Nose Allergy -->
   <ion-item>
     <ion-label>I think I have nose allergy</ion-label>
-    <ion-toggle [(ngModel)]="signupData.allergicNose" (ionChange)="onInputChange('allergicNose')"></ion-toggle>
-    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('allergicNose')">
-      <ion-icon [name]="editMode['allergicNose'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
-    </ion-button>
+    <ion-toggle slot="end" class="full-right" [(ngModel)]="signupData.allergicNose" (ionChange)="onInputChange('allergicNose')"></ion-toggle>
   </ion-item>
 
   <div *ngIf="signupData.allergicNose">
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.noseSymptoms" multiple="true" placeholder="Select Symptoms" [disabled]="!editMode['noseSymptoms']">
+      <ion-label position="fixed">Symptoms</ion-label>
+      <ion-select [(ngModel)]="signupData.noseSymptoms" (ionChange)="onInputChange('noseSymptoms')" multiple="true" [disabled]="!editMode['noseSymptoms']">
         <ion-select-option *ngFor="let symptom of noseSymptomOptions" [value]="symptom">{{ symptom }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('noseSymptoms')">
@@ -50,7 +71,8 @@
       </ion-button>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.noseFrequency" placeholder="Select Frequency" [disabled]="!editMode['noseFrequency']">
+      <ion-label position="fixed">Frequency</ion-label>
+      <ion-select [(ngModel)]="signupData.noseFrequency" (ionChange)="onInputChange('noseFrequency')" [disabled]="!editMode['noseFrequency']">
         <ion-select-option *ngFor="let freq of noseFrequencyOptions" [value]="freq">{{ freq }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('noseFrequency')">
@@ -58,7 +80,8 @@
       </ion-button>
     </ion-item>
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.noseImpact" multiple="true" placeholder="Select Impact" [disabled]="!editMode['noseImpact']">
+      <ion-label position="fixed">Impact</ion-label>
+      <ion-select [(ngModel)]="signupData.noseImpact" (ionChange)="onInputChange('noseImpact')" multiple="true" [disabled]="!editMode['noseImpact']">
         <ion-select-option *ngFor="let impact of noseImpactOptions" [value]="impact">{{ impact }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('noseImpact')">
@@ -70,64 +93,105 @@
   <!-- Tested for Allergens -->
   <ion-item>
     <ion-label>Have you been tested for allergy?</ion-label>
-    <ion-toggle [(ngModel)]="signupData.testedForAllergens" (ionChange)="onInputChange('testedForAllergens')"></ion-toggle>
-    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('testedForAllergens')">
-      <ion-icon [name]="editMode['testedForAllergens'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
-    </ion-button>
+    <ion-toggle slot="end" class="full-right" [(ngModel)]="signupData.testedForAllergens" (ionChange)="onInputChange('testedForAllergens')"></ion-toggle>
   </ion-item>
 
   <div *ngIf="signupData.testedForAllergens">
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.dustSubtypes" multiple="true" placeholder="Select Dust Allergies" [disabled]="!editMode['dustSubtypes']">
+      <ion-label position="fixed">Dust Allergies</ion-label>
+      <ion-select [(ngModel)]="signupData.dustSubtypes" (ionChange)="onInputChange('dustSubtypes')" multiple="true" [disabled]="!editMode['dustSubtypes']">
         <ion-select-option *ngFor="let dust of dustOptions" [value]="dust">{{ dust }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('dustSubtypes')">
         <ion-icon [name]="editMode['dustSubtypes'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
       </ion-button>
     </ion-item>
+    <ion-item *ngIf="signupData.dustSubtypes?.includes('Other')" class="custom-bg">
+      <ion-label position="fixed">Other Dust Allergy</ion-label>
+      <ion-input [(ngModel)]="signupData.dustOther" (ionInput)="onInputChange('dustOther')" [readonly]="!editMode['dustOther']"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('dustOther')">
+        <ion-icon [name]="editMode['dustOther'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.pollenSubtypes" multiple="true" placeholder="Select Pollen Allergies" [disabled]="!editMode['pollenSubtypes']">
+      <ion-label position="fixed">Pollen Allergies</ion-label>
+      <ion-select [(ngModel)]="signupData.pollenSubtypes" (ionChange)="onInputChange('pollenSubtypes')" multiple="true" [disabled]="!editMode['pollenSubtypes']">
         <ion-select-option *ngFor="let pollen of pollenOptions" [value]="pollen">{{ pollen }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('pollenSubtypes')">
         <ion-icon [name]="editMode['pollenSubtypes'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
       </ion-button>
     </ion-item>
+    <ion-item *ngIf="signupData.pollenSubtypes?.includes('Other')" class="custom-bg">
+      <ion-label position="fixed">Other Pollen Allergy</ion-label>
+      <ion-input [(ngModel)]="signupData.pollenOther" (ionInput)="onInputChange('pollenOther')" [readonly]="!editMode['pollenOther']"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('pollenOther')">
+        <ion-icon [name]="editMode['pollenOther'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+
     <ion-item class="custom-bg">
-      <ion-select [(ngModel)]="signupData.moldSubtypes" multiple="true" placeholder="Select Mold Allergies" [disabled]="!editMode['moldSubtypes']">
+      <ion-label position="fixed">Mold Allergies</ion-label>
+      <ion-select [(ngModel)]="signupData.moldSubtypes" (ionChange)="onInputChange('moldSubtypes')" multiple="true" [disabled]="!editMode['moldSubtypes']">
         <ion-select-option *ngFor="let mold of moldOptions" [value]="mold">{{ mold }}</ion-select-option>
       </ion-select>
       <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('moldSubtypes')">
         <ion-icon [name]="editMode['moldSubtypes'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
       </ion-button>
     </ion-item>
+    <ion-item *ngIf="signupData.moldSubtypes?.includes('Other')" class="custom-bg">
+      <ion-label position="fixed">Other Mold Allergy</ion-label>
+      <ion-input [(ngModel)]="signupData.moldOther" (ionInput)="onInputChange('moldOther')" [readonly]="!editMode['moldOther']"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('moldOther')">
+        <ion-icon [name]="editMode['moldOther'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
   </div>
 
   <div *ngIf="!signupData.testedForAllergens">
-      <ion-item class="custom-bg">
-        <ion-select [(ngModel)]="signupData.suspectedAllergens" multiple="true" placeholder="Suspected Allergens" [disabled]="!editMode['suspectedAllergens']">
-            <ion-select-option value="Dust Mites">Dust Mites</ion-select-option>
-            <ion-select-option value="Pollens">Pollens</ion-select-option>
-            <ion-select-option value="Mold">Mold</ion-select-option>
-            <ion-select-option value="Other">Other</ion-select-option>
-        </ion-select>
-        <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('suspectedAllergens')">
-            <ion-icon [name]="editMode['suspectedAllergens'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
-        </ion-button>
+    <ion-item class="custom-bg">
+      <ion-label position="fixed">Suspected Allergens</ion-label>
+      <ion-select [(ngModel)]="signupData.suspectedAllergens" (ionChange)="onInputChange('suspectedAllergens')" multiple="true" [disabled]="!editMode['suspectedAllergens']">
+          <ion-select-option value="Dust Mites">Dust Mites</ion-select-option>
+          <ion-select-option value="Pollens">Pollens</ion-select-option>
+          <ion-select-option value="Mold">Mold</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('suspectedAllergens')">
+          <ion-icon [name]="editMode['suspectedAllergens'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item *ngIf="signupData.suspectedAllergens?.includes('Other')" class="custom-bg">
+      <ion-label position="fixed">Other Suspected Allergy</ion-label>
+      <ion-input [(ngModel)]="signupData.suspectedOther" (ionInput)="onInputChange('suspectedOther')" [readonly]="!editMode['suspectedOther']"></ion-input>
+      <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('suspectedOther')">
+        <ion-icon [name]="editMode['suspectedOther'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      </ion-button>
     </ion-item>
   </div>
 
   <!-- Medication and Satisfaction -->
   <ion-item class="custom-bg">
-    <ion-select [(ngModel)]="signupData.medicationOptions" multiple="true" placeholder="Select Medication" [disabled]="!editMode['medicationOptions']">
+    <ion-label position="fixed">Medication</ion-label>
+    <ion-select [(ngModel)]="signupData.medicationOptions" (ionChange)="onInputChange('medicationOptions')" multiple="true" [disabled]="!editMode['medicationOptions']">
       <ion-select-option *ngFor="let med of medicationOptionsList" [value]="med">{{ med }}</ion-select-option>
     </ion-select>
     <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('medicationOptions')">
       <ion-icon [name]="editMode['medicationOptions'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
     </ion-button>
   </ion-item>
+  <ion-item *ngIf="signupData.medicationOptions?.includes('Others')" class="custom-bg">
+    <ion-label position="fixed">Other Medication</ion-label>
+    <ion-input [(ngModel)]="signupData.treatmentOther" (ionInput)="onInputChange('treatmentOther')" [readonly]="!editMode['treatmentOther']"></ion-input>
+    <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('treatmentOther')">
+      <ion-icon [name]="editMode['treatmentOther'] ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+    </ion-button>
+  </ion-item>
+
   <ion-item class="custom-bg">
-    <ion-select [(ngModel)]="signupData.satisfaction" placeholder="Select Satisfaction" [disabled]="!editMode['satisfaction']">
+    <ion-label position="fixed">Satisfaction</ion-label>
+    <ion-select [(ngModel)]="signupData.satisfaction" (ionChange)="onInputChange('satisfaction')" [disabled]="!editMode['satisfaction']">
       <ion-select-option *ngFor="let satisfaction of satisfactionOptions" [value]="satisfaction">{{ satisfaction }}</ion-select-option>
     </ion-select>
     <ion-button fill="clear" slot="end" (click)="onEditOrUpdate('satisfaction')">
@@ -135,20 +199,34 @@
     </ion-button>
   </ion-item>
 
+  <!-- Location Info -->
+  <ion-item class="custom-bg">
+    <ion-label>City</ion-label>
+    <ion-input [(ngModel)]="signupData.city" readonly></ion-input>
+  </ion-item>
+  <!-- <ion-item class="custom-bg">
+    <ion-label>Latitude</ion-label>
+    <ion-input [(ngModel)]="signupData.latitude" readonly></ion-input>
+  </ion-item>
+  <ion-item class="custom-bg">
+    <ion-label>Longitude</ion-label>
+    <ion-input [(ngModel)]="signupData.longitude" readonly></ion-input>
+  </ion-item> -->
+
   <!-- Other settings -->
   <ion-item lines="none" class="rmv-bck">
     <ion-label>
       <h2><strong>Notification Preference</strong></h2>
       <p>Personalized Alerts<br><small>Get Alerts Tailored To You</small></p>
     </ion-label>
-    <ion-toggle slot="end" [(ngModel)]="notificationToggle" color="primary"></ion-toggle>
+    <ion-toggle slot="end" class="full-right" [(ngModel)]="notificationToggle" color="primary" (ionChange)="onPrefChange('notificationToggle')"></ion-toggle>
   </ion-item>
 
   <ion-item lines="none" class="rmv-bck">
     <ion-label>
       <h2><strong>Location Preference</strong></h2>
     </ion-label>
-    <ion-toggle slot="end" [(ngModel)]="locationToggle" color="primary"></ion-toggle>
+    <ion-toggle slot="end" class="full-right" [(ngModel)]="locationToggle" color="primary" (ionChange)="onPrefChange('locationToggle')"></ion-toggle>
   </ion-item>
 
   <div class="button-container">

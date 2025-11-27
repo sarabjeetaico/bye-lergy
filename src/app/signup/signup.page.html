@@ -21,17 +21,10 @@
     <ion-input [(ngModel)]="signupService.signupData.age" placeholder="Enter Your Age" type="number"></ion-input>
   </ion-item>
 
-  <ion-item class="custom-bg" style="position: relative;">
-    <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-    <ion-select [(ngModel)]="signupService.signupData.doctor" placeholder="Select Your Doctor" interface="popover">
-      <ion-select-option *ngFor="let doctor of dr_list" [value]="doctor.id">{{ doctor.name }}</ion-select-option>
-      <ion-select-option value="other">Other</ion-select-option>
-    </ion-select>
-  </ion-item>
 
-  <ion-item *ngIf="signupService.signupData.doctor == 'other'" class="custom-bg">
+  <ion-item class="custom-bg">
     <img src="assets/Frame 1503 (4).png" alt="Icon" class="input_icon" />
-    <ion-input [(ngModel)]="signupService.signupData.other_doctor" placeholder="Enter your doctor's name" type="text" autocapitalize="words"></ion-input>
+    <ion-input [(ngModel)]="signupService.signupData.doctor" placeholder="Enter your doctor's name" type="text" autocapitalize="words"></ion-input>
   </ion-item>
 
   <div class="center-button">

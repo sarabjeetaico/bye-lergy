@@ -24,7 +24,7 @@ ion-header.custom-header {
   padding: 16px;
 ion-select::part(icon) {
   position: absolute;
-  right: 0px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: auto;
@@ -35,7 +35,27 @@ ion-select::part(icon) {
 
 ion-item.custom-bg {
   position: relative;
-  padding-right: 40px; /* space for icon */
+  padding-right: 12px; /* space for icon */
+}
+/* make profile select/input visuals match signup styles */
+ion-select {
+  flex-grow: 1;
+  --icon-position: end;
+  position: relative;
+}
+
+/* Ensure selects and inputs reserve space so placeholder text isn't hidden by the edit button */
+ion-item.custom-bg ion-select,
+ion-item.custom-bg ion-input,
+ion-item.custom-bg input.native-input {
+  width: calc(100% - 56px);
+}
+
+/* Make the select's displayed text use the same color and not be clipped prematurely */
+ion-select::part(text) {
+  color: #454040;
+  padding-right: 8px;
+  white-space: normal; /* allow wrapping if needed */
 }
   .title {
     font-weight: bold;
@@ -51,15 +71,13 @@ ion-item.custom-bg {
 --background: #f8f8f8;
     --border-color: transparent;
     --highlight-color-focused: transparent;
-    /* --inner-padding-end: 10px; */
+    --inner-padding-end: 10px;
     --inner-padding-start: 10px;
-    // border-radius: 12px;
-    padding: 34px;
-    margin-top: -47px;
-    /* margin-bottom: -17px; */
-        font-size: 14px;
+    border-radius: 12px;
+    padding: 7px 12px 1px 12px;
+    font-size: 14px;
     letter-spacing: 1px;
-    color: gray;
+    color: #454040;
   // Trick to force border-radius using ::part
   &::part(native) {
     border-radius: 12px;           // ✅ actually applies radius to inner part
@@ -74,6 +92,30 @@ img.input_icon {
     /* font-size: 17px; */
 }
 
+.native-doctor-input {
+  color: #454040;
+}
+
+.native-doctor-input::placeholder {
+  color: #a3a3a3;
+}
+
+/* Make all input/select text use the same color as signup page */
+ion-item.custom-bg ion-input,
+ion-item.custom-bg input.native-input,
+ion-item.custom-bg .native-doctor-input,
+ion-item.custom-bg ion-select {
+  color: #454040;
+}
+
+/* Placeholder color for ion-input's native input */
+ion-item.custom-bg ion-input::part(native) {
+  color: #454040;
+}
+ion-item.custom-bg ion-input::part(native) ::placeholder {
+  color: #a3a3a3;
+}
+
 .checkbox-item{
      margin-top: -9px;
     margin-left: 25px;
@@ -82,6 +124,10 @@ img.input_icon {
     font-size: 12px;
     color: gray;
     margin-right: 12px;
+}
+/* Ensure toggles align completely to the right of the ion-item */
+.full-right {
+  margin-left: auto !important;
 }
     .terms-text2 {
     margin-left: 12px;
@@ -183,7 +229,9 @@ ion-button.privacy-button.ion-color.ion-color-primary.md.button.button-block.but
     font-weight: 700;
     margin-top: -6px;
 }
-
+ion-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+    margin-left: 4px;
+}
 .dust-heading {
     color: gray;
     font-size: 14px;

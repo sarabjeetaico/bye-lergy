@@ -10,6 +10,11 @@ import { SignupService } from '../services/signup.service';
 })
 export class SignupStep3Page implements OnInit {
 
+  dustOther: string = '';
+  pollenOther: string = '';
+  moldOther: string = '';
+  suspectedOther: string = '';
+
   constructor(private router: Router, public signupService: SignupService) {}
 
   ngOnInit() {}
@@ -20,6 +25,9 @@ export class SignupStep3Page implements OnInit {
       this.signupService.signupData.dustSubtypes = [];
       this.signupService.signupData.pollenSubtypes = [];
       this.signupService.signupData.moldSubtypes = [];
+      this.dustOther = '';
+      this.pollenOther = '';
+      this.moldOther = '';
     } else {
       this.signupService.signupData.suspectedAllergens = [];
     }
@@ -33,6 +41,9 @@ export class SignupStep3Page implements OnInit {
       if (index > -1) {
         this.signupService.signupData.suspectedAllergens.splice(index, 1);
       }
+      if (allergen === 'Other') {
+        this.suspectedOther = '';
+      }
     }
   }
 
@@ -43,9 +54,15 @@ export class SignupStep3Page implements OnInit {
     if (this.signupService.signupData.testedForAllergens) {
       return this.signupService.signupData.dustSubtypes.length > 0 ||
              this.signupService.signupData.pollenSubtypes.length > 0 ||
-             this.signupService.signupData.moldSubtypes.length > 0;
+             this.signupService.signupData.moldSubtypes.length > 0 ||
+             this.dustOther.trim().length > 0 ||
+             this.pollenOther.trim().length > 0 ||
+             this.moldOther.trim().length > 0;
     } else {
-      return this.signupService.signupData.suspectedAllergens.length > 0;
+      const suspects: string[] = this.signupService.signupData.suspectedAllergens || [];
+      const normalSelected = suspects.some(a => a !== 'Other');
+      const otherSelected = suspects.includes('Other');
+      return normalSelected || (otherSelected && this.suspectedOther.trim().length > 0);
     }
   }
 

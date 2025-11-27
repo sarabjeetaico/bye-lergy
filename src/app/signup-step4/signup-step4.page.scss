@@ -1,15 +1,29 @@
+/* Simplified and optimized signup-step4.page.scss */
+
+/* Header tweaks */
 ion-header, ion-toolbar {
   --border-width: 0 !important;
   --border-style: none !important;
   border: none !important;
   box-shadow: none !important;
+
 }
+
+// Unify ion-select font size and color
+ion-select,
+ion-select::part(text),
+ion-select::part(placeholder) {
+  color: #454040 !important;
+  font-size: 14px !important;
+}
+
 .glen_logo {
-    width: 22%;
+  width: 22%;
 }
+
 ion-header.custom-header {
- background: white;
-    z-index: 10;
+  background: white;
+  z-index: 10;
 }
 
 .content-center {
@@ -24,8 +38,7 @@ ion-header.custom-header {
   .title {
     font-weight: bold;
     font-size: 24px;
-    margin-bottom: 2px;
-    margin-top: 6px;
+    margin: 6px 0 2px 0;
   }
 
   .subtitle {
@@ -39,6 +52,7 @@ ion-header.custom-header {
     margin-top: 32px !important;
   }
 }
+
 .custom-bg {
   --background: #f8f8f8;
   --border-color: transparent;
@@ -46,7 +60,7 @@ ion-header.custom-header {
   --inner-padding-end: 10px;
   --inner-padding-start: 10px;
   border-radius: 12px;
-  padding: 7px 12px 1px 12px;
+  padding: 7px 12px 1px;
   font-size: 14px;
   color: #454040;
   display: flex;
@@ -59,24 +73,45 @@ ion-header.custom-header {
   }
 }
 
-.checkbox-item{
-            margin-top: 10px;
-    --background: #fdf6fb !important;
-    padding: 9px;
-    --border-radius: 10px;
-    .terms-text2 {
-    margin-left: 10px;
-    font-size: 11px;
+ion-select::part(icon) {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  color: #454040;
+  font-size: 20px;
+  display: block;
+}
+
+ion-item.custom-bg {
+  position: relative;
+  padding-right: 12px;
+}
+
+ion-item.custom-bg ion-select,
+ion-item.custom-bg ion-input,
+ion-item.custom-bg input {
+  width: calc(100% - 56px);
+  color: #454040;
+}
+
+ion-select::part(text) {
+  color: #454040;
+  padding-right: 8px;
+  white-space: normal;
+}
+
+ion-checkbox {
+    font-weight: 600;
     color: gray;
-    margin-right: 12px;
 }
-}
+
 .center-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 116px !important;
+  margin: 20px 0 116px 0 !important;
 }
 
 .custom-btn {
@@ -142,9 +177,13 @@ ion-content.content-center {
 
 /* Consent Modal Container (scoped) */
 #consentBox {
-  display: block;
+  /* center the modal and allow inner scrolling */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 13px;
-  padding: 24px;
+  padding: 16px;
   color: #000;
   z-index: 2000;
   position: fixed;
@@ -153,8 +192,7 @@ ion-content.content-center {
   width: 100vw;
   height: 100vh;
   background: rgba(60, 16, 44, 0.12);
-  justify-content: center;
-  align-items: center;
+  overflow: auto; /* allow scrolling when content taller than viewport */
 }
 
 /* Consent Box Styling (scoped) */
@@ -162,12 +200,16 @@ ion-content.content-center {
   background: #fdf6fb;
   border: 2px solid #e2bfd9;
   border-radius: 16px;
-  padding: 28px 22px 22px 22px;
+  padding: 28px 22px 22px;
   max-width: 420px;
-  margin: 40px auto;
+  margin: 24px auto;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   text-align: left;
+  width: 100%;
+  max-height: calc(100vh - 80px); /* keep box inside viewport */
+  overflow: auto; /* scroll inside box if content is long */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Close Button Styling (scoped) */
@@ -212,15 +254,6 @@ ion-content.content-center {
   list-style-type: disc;
 }
 
-/* Checkbox Section (scoped) */
-#consentBox .checkbox-item {
-  margin-top: 15px;
-  background: #fdf6fb;
-  padding: 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: flex-start;
-}
 #consentBox ion-checkbox {
   margin-right: 10px;
   accent-color: #a05184;
@@ -261,4 +294,9 @@ ion-content.content-center {
   #consentBox .consent-content ul li {
     color: #f4a5ee;
   }
+}
+
+ion-label.ion-text-wrap.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
+    margin-left: -182px;
+    font-size: 11px;
 }
