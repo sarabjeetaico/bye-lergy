@@ -1,7 +1,8 @@
 /* Simplified and optimized signup-step4.page.scss */
 
 /* Header tweaks */
-ion-header, ion-toolbar {
+ion-header,
+ion-toolbar {
   --border-width: 0 !important;
   --border-style: none !important;
   border: none !important;
@@ -67,6 +68,7 @@ ion-header.custom-header {
   margin-top: 10px;
   align-items: center;
   justify-content: space-between;
+
   &::part(native) {
     border-radius: 12px;
     overflow: hidden;
@@ -98,13 +100,18 @@ ion-item.custom-bg input {
 
 ion-select::part(text) {
   color: #454040;
-  padding-right: 8px;
+  padding-right: 30px;
   white-space: normal;
 }
 
 ion-checkbox {
-    font-weight: 600;
-    color: gray;
+  font-weight: 600;
+  color: gray;
+}
+
+img.input_icon {
+  width: 35px;
+  margin-right: 10px;
 }
 
 .center-button {
@@ -132,12 +139,36 @@ ion-content.content-center {
   ion-content.content-center {
     background: #2d1430 !important;
   }
+
   .custom-bg {
     --background: #3a1d3a;
     color: #fff;
   }
-  .title, .subtitle {
+
+  .title,
+  .subtitle {
     color: #fff;
+  }
+
+  // Fix placeholder visibility in dark mode
+  ion-select,
+  ion-select::part(text),
+  ion-select::part(placeholder) {
+    color: #ccc !important;
+  }
+
+  ion-input {
+    --placeholder-color: #ccc !important;
+    color: #fff !important;
+  }
+
+  // Make dropdown icons visible in dark mode
+  ion-select::part(icon) {
+    color: #ccc !important;
+  }
+
+  ion-checkbox {
+    color: #ccc;
   }
 }
 
@@ -192,7 +223,8 @@ ion-content.content-center {
   width: 100vw;
   height: 100vh;
   background: rgba(60, 16, 44, 0.12);
-  overflow: auto; /* allow scrolling when content taller than viewport */
+  overflow: auto;
+  /* allow scrolling when content taller than viewport */
 }
 
 /* Consent Box Styling (scoped) */
@@ -207,8 +239,10 @@ ion-content.content-center {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   text-align: left;
   width: 100%;
-  max-height: calc(100vh - 80px); /* keep box inside viewport */
-  overflow: auto; /* scroll inside box if content is long */
+  max-height: calc(100vh - 80px);
+  /* keep box inside viewport */
+  overflow: auto;
+  /* scroll inside box if content is long */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -231,6 +265,7 @@ ion-content.content-center {
   line-height: 1;
   transition: background .3s;
 }
+
 #consentBox .close-btn:hover {
   background: #fae2f0;
 }
@@ -247,6 +282,7 @@ ion-content.content-center {
 #consentBox .consent-content ul {
   padding-left: 20px;
 }
+
 #consentBox .consent-content ul li {
   margin: 6px 0;
   color: #7a1f5c;
@@ -258,6 +294,7 @@ ion-content.content-center {
   margin-right: 10px;
   accent-color: #a05184;
 }
+
 #consentBox .terms-text2 {
   margin-left: 8px;
   font-size: 12px;
@@ -271,6 +308,7 @@ ion-content.content-center {
     margin: 10px auto;
     padding: 18px 6px 16px 6px;
   }
+
   #consentBox {
     padding: 8px;
   }
@@ -283,20 +321,23 @@ ion-content.content-center {
     border-color: #963E75;
     color: #fff;
   }
+
   #consentBox {
     background: rgba(60, 16, 44, 0.28);
     color: #fff;
   }
+
   #consentBox .consent-content p,
   #consentBox .terms-text2 {
     color: #fff;
   }
+
   #consentBox .consent-content ul li {
     color: #f4a5ee;
   }
 }
 
 ion-label.ion-text-wrap.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
-    margin-left: -182px;
-    font-size: 11px;
+  margin-left: -182px;
+  font-size: 11px;
 }

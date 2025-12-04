@@ -12,7 +12,7 @@ import { SignupService } from '../services/signup.service';
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
-  imports: [CommonModule, FormsModule, IonicModule,FooterComponent],
+  imports: [CommonModule, FormsModule, IonicModule, FooterComponent],
 })
 export class ProfilePage implements OnInit {
   signupData: any;
@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
   editMode: { [key: string]: boolean } = {};
   inputChanged: { [key: string]: boolean } = {};
 
-  dr_list:any;
+  dr_list: any;
   doctorInput: string = '';
   dustOptions = [
     'Dermatophagoides Pteronyssinus',
@@ -69,18 +69,18 @@ export class ProfilePage implements OnInit {
     this.signupData = this.signupService.signupData;
   }
 
-  onSignup(){}
-  onClose(){
-      this.showContainer = (this.showContainer) ? false : true
-    }
-  onAgreeTermsChange(){
-      this.showContainer = true;
-    }
+  onSignup() { }
+  onClose() {
+    this.showContainer = (this.showContainer) ? false : true
+  }
+  onAgreeTermsChange() {
+    this.showContainer = true;
+  }
   ngOnInit() {
     const data = localStorage.getItem('signupData');
     if (data) {
       this.signupData = JSON.parse(data);
-      console.log("signupData: ",this.signupData)
+      console.log("signupData: ", this.signupData)
     }
     // initialize doctorInput display value from signupData once dr_list is available
     this.dataService.getDr().subscribe(res => {
@@ -103,7 +103,7 @@ export class ProfilePage implements OnInit {
     });
 
 
-  
+
     // Load simple preferences (if any) from localStorage
     try {
       const notif = localStorage.getItem('notificationToggle');
@@ -169,29 +169,13 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  // Handle manual doctor input: store id when matched, or store 'other' or typed name
+  // Handle manual doctor input: store the typed name directly
   onDoctorInput(value: string) {
     const v = value || '';
     this.doctorInput = v;
     if (!this.signupData) return;
-    if (v === 'Other') {
-      this.signupData.doctor = 'other';
-      // persist change
-      this.onInputChange('doctor');
-      return;
-    }
 
-    if (this.dr_list && Array.isArray(this.dr_list)) {
-      const found = this.dr_list.find((d: any) => d.name === v);
-      if (found) {
-        // store id internally but keep display as name
-        this.signupData.doctor = found.id;
-        this.onInputChange('doctor');
-        return;
-      }
-    }
-
-    // If not found in list, store the typed value as the doctor's name
+    // Store the typed value as the doctor's name
     this.signupData.doctor = v;
     this.onInputChange('doctor');
   }

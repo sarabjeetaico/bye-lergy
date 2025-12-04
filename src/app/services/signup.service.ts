@@ -19,7 +19,7 @@ export class SignupService {
     noseSymptoms: [] as string[], // runny, itchy, block, sneezing
     noseFrequency: '' as string, // less or more than 4 days
     noseImpact: [] as string[], // sleep, work, troublesome, nothing
-    medicationOptions: [] as string[], // treatment options (multiple)
+    medicationOptions: '', // treatment option (single selection)
     satisfaction: '', // satisfaction feedback (single)
     agreeTerms: false,
     latitude: null as number | null,
@@ -44,7 +44,7 @@ export class SignupService {
       noseSymptoms: [] as string[],
       noseFrequency: '' as string,
       noseImpact: [] as string[],
-      medicationOptions: [] as string[],
+      medicationOptions: '',
       satisfaction: '',
       agreeTerms: false,
       latitude: null as number | null,

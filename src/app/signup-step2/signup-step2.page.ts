@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignupService } from '../services/signup.service';
-import { IonSelect } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup-step2',
@@ -10,8 +10,6 @@ import { IonSelect } from '@ionic/angular';
   standalone: false
 })
 export class SignupStep2Page implements OnInit {
-  @ViewChild('noseImpactSelect') noseImpactSelect!: IonSelect;
-
   dustOptions = [
     'Dermatophagoides Pteronyssinus',
     'Dermatophagoides Farinae',
@@ -36,11 +34,11 @@ export class SignupStep2Page implements OnInit {
   suspectedAllergens: string[] = [];
   suspectedOther: string = '';
 
-  constructor(private router: Router, public signupService: SignupService, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router, public signupService: SignupService, private cdr: ChangeDetectorRef, private modalController: ModalController) {
     this.initSignupData();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   initSignupData() {
     // Initialize data model if not present
@@ -94,8 +92,8 @@ export class SignupStep2Page implements OnInit {
     if (this.signupService.signupData.allergicNose === true) {
       // "Yes" selected: require at least one from each dropdown
       return this.signupService.signupData.noseSymptoms.length > 0 &&
-             this.signupService.signupData.noseFrequency !== '' &&
-             this.signupService.signupData.noseImpact.length > 0;
+        this.signupService.signupData.noseFrequency !== '' &&
+        this.signupService.signupData.noseImpact.length > 0;
     } else if (this.signupService.signupData.allergicNose === false) {
       // "No" selected: require at least one suspected allergen checked
       const suspects = this.signupService.signupData.suspectedAllergens;
@@ -129,20 +127,29 @@ export class SignupStep2Page implements OnInit {
     }
   }
 
-  onNoseImpactChange(selectedValues: string[] | null | undefined) {
-    let updatedValues: string[] = [];
+  async openNoseImpactModal() {
+    const modal = await this.modalController.create({
+      component: ImpactSelectionModal,
+      componentProps: {
+        currentSelections: [...(this.signupService.signupData.noseImpact || [])]
+      },
+      cssClass: 'impact-selection-modal'
+    });
 
-    if (Array.isArray(selectedValues)) {
-      // If "Nothing Above" is selected, it should be the only value.
-      if (selectedValues.includes('Nothing Above')) {
-        updatedValues = ['Nothing Above'];
-      } else {
-        updatedValues = selectedValues;
-      }
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data && data.selections !== undefined) {
+      this.signupService.signupData.noseImpact = data.selections;
+      this.cdr.detectChanges();
     }
+  }
 
-    this.signupService.signupData.noseImpact = updatedValues;
-    this.cdr.detectChanges();
+  getSelectedImpactText(): string {
+    const selected = this.signupService.signupData.noseImpact || [];
+    if (selected.length === 0) return '';
+    if (selected.length === 1) return selected[0];
+    return `${selected.length} selected`;
   }
 
   get isNothingAboveSelected(): boolean {
@@ -169,3 +176,95 @@ export class SignupStep2Page implements OnInit {
     this.router.navigate(['/signup']);
   }
 }
+
+// Inline Modal Component for Impact Selection
+@Component({
+  selector: 'app-impact-selection-modal',
+  template: `
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Select Impact</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="selections.sleepDisturbances" (ionChange)="onCheckboxChange('sleep')">
+            Sleep Disturbances
+          </ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="selections.affectingWork" (ionChange)="onCheckboxChange('work')">
+            Affecting Work/school/Daily Activities
+          </ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="selections.troublesome" (ionChange)="onCheckboxChange('troublesome')">
+            Troublesome
+          </ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="selections.nothingAbove" (ionChange)="onCheckboxChange('nothing')">
+            Nothing Above
+          </ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button expand="block" (click)="confirm()">OK</ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  `,
+  standalone: false
+})
+export class ImpactSelectionModal {
+  selections = {
+    sleepDisturbances: false,
+    affectingWork: false,
+    troublesome: false,
+    nothingAbove: false
+  };
+
+  currentSelections: string[] = [];
+
+  constructor(private modalCtrl: ModalController) { }
+
+  ngOnInit() {
+    // Initialize selections based on current values
+    this.selections.sleepDisturbances = this.currentSelections.includes('Sleep Disturbances');
+    this.selections.affectingWork = this.currentSelections.includes('Affecting Work/School/Daily Activities');
+    this.selections.troublesome = this.currentSelections.includes('Troublesome');
+    this.selections.nothingAbove = this.currentSelections.includes('Nothing Above');
+  }
+
+  onCheckboxChange(type: string) {
+    if (type === 'nothing' && this.selections.nothingAbove) {
+      // "Nothing Above" was checked, uncheck all others
+      this.selections.sleepDisturbances = false;
+      this.selections.affectingWork = false;
+      this.selections.troublesome = false;
+    } else if (type !== 'nothing' && this.selections.nothingAbove) {
+      // Another option was checked while "Nothing Above" was checked
+      this.selections.nothingAbove = false;
+    }
+  }
+
+  cancel() {
+    this.modalCtrl.dismiss();
+  }
+
+  confirm() {
+    const result: string[] = [];
+    if (this.selections.sleepDisturbances) result.push('Sleep Disturbances');
+    if (this.selections.affectingWork) result.push('Affecting Work/School/Daily Activities');
+    if (this.selections.troublesome) result.push('Troublesome');
+    if (this.selections.nothingAbove) result.push('Nothing Above');
+
+    this.modalCtrl.dismiss({ selections: result });
+  }
+}
+

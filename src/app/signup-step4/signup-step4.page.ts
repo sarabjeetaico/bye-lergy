@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     IonicModule,
-  // ...removed ConcernPopupComponent from imports...
+    // ...removed ConcernPopupComponent from imports...
   ]
 })
 export class SignupStep4Page implements OnInit {
@@ -41,26 +41,26 @@ export class SignupStep4Page implements OnInit {
     public signupService: SignupService,
     private dataService: DataService,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onMedicationChange() {
-    if (!this.signupService.signupData.medicationOptions.includes('Others')) {
+    if (this.signupService.signupData.medicationOptions !== 'Others') {
       this.treatmentOther = '';
     }
   }
 
   isSignUpEnabled(): boolean {
     const medicationOptions = this.signupService.signupData.medicationOptions;
-    const isOtherSelected = medicationOptions.includes('Others');
+    const isOtherSelected = medicationOptions === 'Others';
     const isOtherValid = isOtherSelected ? this.treatmentOther.trim().length > 0 : true;
 
-    return medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '' && this.signupService.signupData.agreeTerms && isOtherValid;
+    return medicationOptions !== '' && this.signupService.signupData.satisfaction !== '' && this.signupService.signupData.agreeTerms && isOtherValid;
   }
 
   isCheckboxEnabled(): boolean {
-    return this.signupService.signupData.medicationOptions.length > 0 && this.signupService.signupData.satisfaction !== '';
+    return this.signupService.signupData.medicationOptions !== '' && this.signupService.signupData.satisfaction !== '';
   }
 
   showConsentModal = false;
